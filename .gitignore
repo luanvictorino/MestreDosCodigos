@@ -1,0 +1,8 @@
+*.local
+*.identcache
+*.stat
+*.res
+*.exe
+*.*~*~
+*.txt
+*.dcu
