@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{EDC79C53-2790-4DB1-AFAC-38B5E430E2D7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Missao02\Missao2.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Missao2">
+        <MSBuild Projects="Missao02\Missao2.dproj"/>
+    </Target>
+    <Target Name="Missao2:Clean">
+        <MSBuild Projects="Missao02\Missao2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao2:Make">
+        <MSBuild Projects="Missao02\Missao2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Missao2"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Missao2:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Missao2:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
