@@ -1,3 +1,27 @@
+//////////////////////////////////////////////////////////////
+//  Autor: Luan Victorino                                   //
+//    Date: 13/12/2019                                      //
+// Mission: Em uma aplicação console, escreva uma classe    //
+//          que implemente o algoritmo de pilha. Esta       //
+//          classe deverá utilizar Generics para poder      //
+//          armazenar qualquer tipo de conteúdo e conter os //
+//          métodos Push, Pop, Size e IsEmpty. Após a       //
+//          implementação da classe, faça:                  //
+//            - Construa dois objetos. Um deve armazenar    //
+//              strings e outro deve armazenar inteiros;    //
+//            - Adicione três strings aleatórias e 15       //
+//              números aleatórios (podem ser entradas do   //
+//              usuário);                                   //
+//            - Imprima o retorno da função Size dos dois   //
+//              objetos;                                    //
+//            - Execute o método Push da pilha de strings,  //
+//              mostrando o resultado no console, até que a //
+//              pilha esteja vazia;                         //
+//            - Faça o mesmo procedimento com a pilha de    //
+//              inteiros;                                   //
+//            - Imprima o retorno da função Size dos dois   //
+//              objetos;                                    //
+//////////////////////////////////////////////////////////////
 program Missao8;
 
 {$APPTYPE CONSOLE}

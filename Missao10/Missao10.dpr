@@ -1,3 +1,21 @@
+//////////////////////////////////////////////////////////////
+//  Autor: Luan Victorino                                   //
+//    Date: 13/12/2019                                      //
+// Mission: Em uma aplicação console, crie uma classe que   //
+//          executará operações matemáticas, chamada        //
+//          TClasseMatematica. Ela terá duas propriedades do//
+//          tipo double, chamadas Esquerda e Direita, e     //
+//          também uma propriedade que receberá um método   //
+//          anônimo que referencie uma function, com retorno//
+//          do tipo double (crie o tipo com o nome          //
+//          TOperacaoMatematica). A aplicação solicitará ao //
+//          usuário qual operação deve ser executada        //
+//          (+ - * /) e os números da operação (Esquerda e  //
+//          Direita). De acordo com a entrada do usuário, a //
+//          operação matemática correta será executada      //
+//          através de um método anônimo, presente na       //
+//          propriedade do tipo TOperacaoMatematica.        //
+//////////////////////////////////////////////////////////////
 program Missao10;
 
 {$APPTYPE CONSOLE}

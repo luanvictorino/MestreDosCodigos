@@ -1,3 +1,11 @@
+//////////////////////////////////////////////////////////////
+//   Autor: Luan Victorino                                  //
+//    Date: 06/12/2019                                      //
+// Mission: Em uma aplicação console, construa um programa  //
+//          que leia uma lista de frases. Apresente ao      //
+//          usuário apenas as frases que formam um          //
+//          palíndromo                                      //
+//////////////////////////////////////////////////////////////
 program Missao5;
 
 {$APPTYPE CONSOLE}

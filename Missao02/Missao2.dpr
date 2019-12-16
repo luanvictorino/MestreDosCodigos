@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////////
+//  Autor: Luan Victorino                                   //
+//    Date: 05/12/2019                                      //
+// Mission: Em uma aplicação console, construa um programa  //
+//          que leia uma lista de números informada pelo    //
+//          usuário. Em seguida, através do algoritmo       //
+//          merge-sort, faça a ordenação da lista e         //
+//          apresente o resultado.                          //
+//////////////////////////////////////////////////////////////
 program Missao2;
 
 {$APPTYPE CONSOLE}

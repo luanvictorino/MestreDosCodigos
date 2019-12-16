@@ -1,3 +1,13 @@
+//////////////////////////////////////////////////////////////
+//   Autor: Luan Victorino                                  //
+//    Date: 11/12/2019                                      //
+// Mission: Escreva uma DLL que transcreva um dado número   //
+//          por extenso. Construa um programa console que   //
+//          faça o carregamento estático da DLL. Neste      //
+//          programa, o usuário poderá entrar com um número //
+//          qualquer e, como saída, o programa deverá       //
+//          transcrever o número por extenso em tela.       //
+//////////////////////////////////////////////////////////////
 program Missao7;
 
 {$APPTYPE CONSOLE}

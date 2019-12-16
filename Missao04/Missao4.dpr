@@ -1,3 +1,15 @@
+//////////////////////////////////////////////////////////////
+//  Autor: Luan Victorino                                   //
+//    Date: 06/12/2019                                      //
+// Mission: Escreva uma aplicação console que receba uma    //
+//          lista de nomes completos (nome e sobrenome)     //
+//          informados pelo usuário. Estes nomes deverão    //
+//          ser convertidos para caixa-mista, ou seja,      //
+//          as iniciais de cada nome devem ser maiúsculas.  //
+//          Leve em consideração que as preposições (“de”,  //
+//          “do”, “dos”, ”e”, etc.) devem ser convertidas   //
+//          para minúsculas                                 //
+//////////////////////////////////////////////////////////////
 program Missao4;
 
 {$APPTYPE CONSOLE}

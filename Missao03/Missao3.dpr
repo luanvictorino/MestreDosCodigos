@@ -1,3 +1,15 @@
+//////////////////////////////////////////////////////////////
+//  Autor: Luan Victornio                                   //
+//    Date: 05/12/2019                                      //
+// Mission: Em uma aplicação console, escreva um programa   //
+//          que leia os seguintes dados: nome do vendedor,  //
+//          salário fixo e total de vendas. Considerando    //
+//          que o salário fixo tem um acréscimo de 15% com  //
+//          base no total vendido, apresente na tela: o     //
+//          nome do usuário, o salário fixo e o valor a     //
+//          receber. Obs: Utilize um objeto para armazenar  //
+//          essas informações do vendedor.                  //
+//////////////////////////////////////////////////////////////
 program Missao3;
 
 {$APPTYPE CONSOLE}

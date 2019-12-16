@@ -1,3 +1,16 @@
+//////////////////////////////////////////////////////////////
+//   Autor: Luan Victorino                                  //
+//    Date: 09/12/2019                                      //
+// Mission: Escreva uma DLL que execute os seguintes        //
+//          cálculos geométricos: área de um triângulo,     //
+//          área do círculo e área do retângulo/quadrado.   //
+//          Construa um programa console que carregue a DLL //
+//          de forma dinâmica. Neste programa, o usuário    //
+//          deve entrar com o tipo de cálculo que deseja    //
+//          executar e os valores referentes ao cálculo. No //
+//          final da execução, o resultado deve ser         //
+//          apresentado em tela.                            //
+//////////////////////////////////////////////////////////////
 program Missao6;
 
 {$APPTYPE CONSOLE}
