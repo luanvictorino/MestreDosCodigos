@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{8916E8C4-5828-49DD-829D-FE62D8A23A50}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Missao6Dll.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao6.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Missao6Dll">
+        <MSBuild Projects="Missao6Dll.dproj"/>
+    </Target>
+    <Target Name="Missao6Dll:Clean">
+        <MSBuild Projects="Missao6Dll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao6Dll:Make">
+        <MSBuild Projects="Missao6Dll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao6">
+        <MSBuild Projects="Missao6.dproj"/>
+    </Target>
+    <Target Name="Missao6:Clean">
+        <MSBuild Projects="Missao6.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao6:Make">
+        <MSBuild Projects="Missao6.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Missao6Dll;Missao6"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Missao6Dll:Clean;Missao6:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Missao6Dll:Make;Missao6:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
