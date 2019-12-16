@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{DA29865B-E469-49D5-93D2-ADE089A1367C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Missao7.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao7Dll.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Missao7">
+        <MSBuild Projects="Missao7.dproj"/>
+    </Target>
+    <Target Name="Missao7:Clean">
+        <MSBuild Projects="Missao7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao7:Make">
+        <MSBuild Projects="Missao7.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao7Dll">
+        <MSBuild Projects="Missao7Dll.dproj"/>
+    </Target>
+    <Target Name="Missao7Dll:Clean">
+        <MSBuild Projects="Missao7Dll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao7Dll:Make">
+        <MSBuild Projects="Missao7Dll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Missao7;Missao7Dll"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Missao7:Clean;Missao7Dll:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Missao7:Make;Missao7Dll:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
