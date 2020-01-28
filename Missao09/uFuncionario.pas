@@ -11,7 +11,7 @@ type
     procedure SetNome(const Value: String);
     procedure SetEmail(const Value: String);
     procedure SetTelefone(const Value: String);
-  published
+  public
     property Nome: String read FNome write SetNome;
     property Email: String read FEmail write SetEmail;
     property Telefone: String read FTelefone write SetTelefone;
