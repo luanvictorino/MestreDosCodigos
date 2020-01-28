@@ -18,7 +18,7 @@ end;
 
 function CalcularAreaCirculo(nRaio: Real): Real; stdcall;
 const
-  nPI = 3.14;
+  nPI = 3.14159265359;
 begin
   Result := (nRaio*nRaio)*nPI;
 end;

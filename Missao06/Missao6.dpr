@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////
 //   Autor: Luan Victorino                                  //
-//    Date: 09/12/2019                                      //
-// Mission: Escreva uma DLL que execute os seguintes        //
+//    Data: 09/12/2019                                      //
+//  Missão: Escreva uma DLL que execute os seguintes        //
 //          cálculos geométricos: área de um triângulo,     //
 //          área do círculo e área do retângulo/quadrado.   //
 //          Construa um programa console que carregue a DLL //
@@ -37,6 +37,8 @@ var
   nAltura: Real;
   nArea: Real;
 begin
+  Writeln('-----Calcular área de um triângulo-----');
+  Writeln(EmptyStr);
   repeat
     Write('Informe a base: ');
     Readln(nBase);
@@ -46,7 +48,7 @@ begin
     if not(nBase <= 0) or (nAltura <= 0) then
       break;
 
-    Writeln('O número não pode ser menor ou igual a zero, por favor informe um valor válido!');
+    Writeln('O número não pode ser menor ou igual a zero, informe um valor válido!');
   until False;
 
   hDll := LoadLibrary(sNomeBiblioteca);
@@ -59,7 +61,7 @@ begin
       raise Exception.Create('Função não encontrada!!');
 
     nArea := oCalcularAreaTriangulo(nBase, nAltura);
-    Writeln('A area do Triângulo eh: '+ FloatToStr(nArea));
+    Writeln('A area do Triângulo eh: '+ FormatFloat('#0.00',nArea));
   finally
     FreeLibrary(hDll);
   end;
@@ -73,6 +75,8 @@ var
   nAltura: Real;
   nArea: Real;
 begin
+  Writeln('-----Calcular área de um quadrado/retângulo-----');
+  Writeln(EmptyStr);
   repeat
     Write('Informe a base: ');
     Readln(nBase);
@@ -82,7 +86,7 @@ begin
     if not (nBase <= 0) or (nAltura <= 0) then
       break;
 
-    Writeln('O número não pode ser menor ou igual a zero, por favor informe um valor válido!');
+    Writeln('O número não pode ser menor ou igual a zero, informe um valor válido!');
   until False;
 
   hDll := LoadLibrary(sNomeBiblioteca);
@@ -95,7 +99,7 @@ begin
       raise Exception.Create('Função não encontrada!!');
 
     nArea := oCalcularAreaQuadradoRetangulo(nBase, nAltura);
-    Writeln('A area do quadrado/retângulo eh: '+FloatToStr(nArea));
+    Writeln('A area do quadrado/retângulo eh: '+FormatFloat('#0.00',nArea));
   finally
     FreeLibrary(hDll);
   end;
@@ -108,6 +112,8 @@ var
   nRaio: Real;
   nArea: Real;
 begin
+  Writeln('-----Calcular área de um círculo-----');
+  Writeln(EmptyStr);
   repeat
     Write('Informe o raio do círculo: ');
     Readln(nRaio);
@@ -115,7 +121,7 @@ begin
     if not (nRaio <= 0) then
       break;
 
-    Writeln('O raio não pode ser menor ou igual a zero, por favor informe um valor válido');
+    Writeln('O raio não pode ser menor ou igual a zero, informe um valor válido');
   until False;
 
   hDll := LoadLibrary(sNomeBiblioteca);
@@ -128,7 +134,7 @@ begin
       raise Exception.Create('Função não encontrada!!');
 
     nArea := oCalcularAreaCirculo(nRaio);
-    Writeln('A area do circulo eh: '+ FloatToStr(nArea));
+    Writeln('A área do circulo eh: '+ FormatFloat('#0.00',nArea));
   finally
     FreeLibrary(hDll);
   end;
@@ -142,7 +148,8 @@ begin
     Writeln('Área de um triângulo          [1]');
     Writeln('Área de um círculo            [2]');
     Writeln('Área de um quadrado/retângulo [3]');
-    Write('Digite o número de 1 a 3 relacionado a operação desejada: ');
+    Writeln(EmptyStr);
+    Write('Digite o número relacionado a operação desejada: ');
     Readln(sOperacao);
     Writeln;
 
@@ -150,9 +157,9 @@ begin
       Break;
 
     Writeln('Digito inválido!! Tente novamente.');
-  until false;
+  until False;
 
-  case StrToInt(sOperacao) of
+  case sOperacao.ToInteger of
     1: MostrarAreaTriangulo;
     2: MostrarAreaCirculo;
     3: MostrarAreaQuadradoRetangulo;
@@ -161,5 +168,6 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.
