@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////
-//  Autor: Luan Victornio                                   //
-//    Date: 05/12/2019                                      //
-// Mission: Em uma aplicação console, escreva um programa   //
+//   Autor: Luan Victornio                                  //
+//    Data: 05/12/2019                                      //
+//  Missão: Em uma aplicação console, escreva um programa   //
 //          que leia os seguintes dados: nome do vendedor,  //
 //          salário fixo e total de vendas. Considerando    //
 //          que o salário fixo tem um acréscimo de 15% com  //
@@ -28,7 +28,6 @@ var
   sTotalVendas: String;
 begin
   oVendedor := TVendedor.Create;
-
   repeat
     Write('Digite o nome do vendedor: ');
     Readln(sNome);
@@ -36,11 +35,11 @@ begin
 
     Write('Digite o salário fixo: ');
     Readln(sSalarioFixo);
-    oVendedor.SalarioFixo := sSalarioFixo.ToDouble;
+    oVendedor.SalarioFixo := sSalarioFixo;
 
     Write('Digite o total de vendas: ');
     Readln(sTotalVendas);
-    oVendedor.TotalVendas := sTotalVendas.ToDouble;
+    oVendedor.TotalVendas := sTotalVendas;
 
     if not oVendedor.ValidarDados then
       Writeln('Dados inválidos, favor informe-os novamente!!');
@@ -51,5 +50,6 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.

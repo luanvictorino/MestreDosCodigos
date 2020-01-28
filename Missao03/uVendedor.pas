@@ -6,20 +6,19 @@ type
 
   TVendedor = class
   private
-
     FNome: String;
-    FSalarioFixo: Real;
-    FTotalVendas: Real;
+    FSalarioFixo: String;
+    FTotalVendas: String;
     procedure SetNome(Value: String);
-    procedure SetSalarioFixo(Value: Real);
-    procedure SetTotalVendas(Value: Real);
+    procedure SetSalarioFixo(Value: String);
+    procedure SetTotalVendas(Value: String);
   public
+    function ValidarDados: boolean;
     function CalcularValorReceber: Real;
     procedure MostrarValorReceber;
-    function ValidarDados: boolean;
     property Nome: String read FNome write SetNome;
-    property SalarioFixo: Real read FSalarioFixo write SetSalarioFixo;
-    property TotalVendas: Real read FTotalVendas write SetTotalVendas;
+    property SalarioFixo: String read FSalarioFixo write SetSalarioFixo;
+    property TotalVendas: String read FTotalVendas write SetTotalVendas;
   end;
 
 implementation
@@ -30,13 +29,13 @@ uses
 { TVendedor }
 
 function TVendedor.CalcularValorReceber: Real;
+const
+  nAcrescimo = 0.15;
 var
   nTotalAcrescimo: Real;
-  nAcrescimo: Real;
 begin
-  nAcrescimo := 0.15;
-  nTotalAcrescimo := TotalVendas*nAcrescimo;
-  Result := SalarioFixo + nTotalAcrescimo;
+  nTotalAcrescimo := StrToFloat(TotalVendas)*nAcrescimo;
+  Result := StrToFloat(SalarioFixo) + nTotalAcrescimo;
 end;
 
 procedure TVendedor.MostrarValorReceber;
@@ -46,24 +45,25 @@ begin
   nValorReceber := CalcularValorReceber;
   Writeln('===================');
   Writeln('Vendedor: '+Nome);
-  Writeln('Salário Fixo: R$'+FormatFloat('#0.00',SalarioFixo));
+  Writeln('Salário Fixo: R$'+FormatFloat('#0.00',StrToFloat(SalarioFixo)));
   Writeln('Valor a receber: R$'+FormatFloat('#0.00',nValorReceber));
+  Writeln('===================');
 end;
 
 function TVendedor.ValidarDados: boolean;
 begin
-  result := false;
+  Result := False;
 
   if Nome.IsEmpty then
     Exit;
 
-  if SalarioFixo <= 0 then
+  if SalarioFixo.IsEmpty then
     Exit;
 
-  if TotalVendas <= 0 then
+  if TotalVendas.IsEmpty then
     Exit;
 
-  result := true;
+  Result := True;
 end;
 
 procedure TVendedor.SetNome(Value: String);
@@ -71,14 +71,14 @@ begin
   FNome := Value;
 end;
 
-procedure TVendedor.SetSalarioFixo(Value: Real);
+procedure TVendedor.SetSalarioFixo(Value: String);
 begin
-  FSalarioFixo := Value;
+  FSalarioFixo := StringReplace(Value, '.', ',', []);
 end;
 
-procedure TVendedor.SetTotalVendas(Value: Real);
+procedure TVendedor.SetTotalVendas(Value: String);
 begin
-  FTotalVendas := Value;
+  FTotalVendas := StringReplace(Value, '.', ',', []);
 end;
 
 
