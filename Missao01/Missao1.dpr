@@ -1,3 +1,10 @@
+//////////////////////////////////////////////////////////////
+//   Autor: Luan Victorino                                  //
+//    Data: 04/12/2019                                      //
+//  Missão: Em uma aplicação console, construa um programa  //
+//          que faça o cálculo fatorial do número informado //
+//          pelo usuário.                                   //
+//////////////////////////////////////////////////////////////
 program Missao1;
 
 {$APPTYPE CONSOLE}
@@ -39,5 +46,6 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.
