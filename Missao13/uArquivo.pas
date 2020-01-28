@@ -55,6 +55,7 @@ begin
   Writeln(sArquivo, 'Primeira linha');
   Writeln(sArquivo, 'Segunda linha');
   Writeln(sArquivo, 'Terceira linha');
+  Writeln(sArquivo, 'Quarta linha');
   CloseFile(sArquivo);
 end;
 
