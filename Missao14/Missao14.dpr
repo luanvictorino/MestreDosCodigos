@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////
 //   Autor: Luan Victorino                                     //
-//    Date: 03/01/2020                                         //
-// Mission: Implemente o diagrama abaixo:                      //
+//    Data: 03/01/2020                                         //
+//  Missão: Implemente o diagrama abaixo:                      //
 //          https://db1group.github.io/mestre-dos-codigos/     //
 //                img/diagrama-delphi.png                      //
 /////////////////////////////////////////////////////////////////
