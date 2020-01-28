@@ -47,9 +47,9 @@ var
 begin
   oLeitorClasse := TLeitorClasse.Create;
   try
-    oLeitorClasse.ListarPropriedades<TMemo>(mmPropriedades.Lines);
-    oLeitorClasse.ListarMetodos<TMemo>(mmMetodos.Lines);
-    lbNomeClasse.Caption := oLeitorClasse.NomeClasse<TMemo>;
+    oLeitorClasse.ListarPropriedades<TButton>(mmPropriedades.Lines);
+    oLeitorClasse.ListarMetodos<TButton>(mmMetodos.Lines);
+    lbNomeClasse.Caption := oLeitorClasse.NomeClasse<TButton>;
   finally
     oLeitorClasse.Free;
   end;
