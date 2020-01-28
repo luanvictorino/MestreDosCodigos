@@ -1,7 +1,7 @@
 ﻿//////////////////////////////////////////////////////////////
 //   Autor: Luan Victorino                                  //
-//    Date: 13/12/2019                                      //
-// Mission: Em uma aplicação console, crie uma classe       //
+//    Data: 13/12/2019                                      //
+// Misssão: Em uma aplicação console, crie uma classe       //
 //          chamada TFuncionario que armazene os dados de   //
 //          funcionários (nome, email e telefone). Crie     //
 //          também uma classe, utilizando Generics, chamada //
