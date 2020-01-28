@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////
 //   Autor: Luan Victorino                                  //
-//    Date: 11/12/2019                                      //
-// Mission: Escreva uma DLL que transcreva um dado número   //
+//    Data: 11/12/2019                                      //
+//  Missão: Escreva uma DLL que transcreva um dado número   //
 //          por extenso. Construa um programa console que   //
 //          faça o carregamento estático da DLL. Neste      //
 //          programa, o usuário poderá entrar com um número //
@@ -17,18 +17,6 @@ program Missao7;
 uses
   System.SysUtils,
   System.StrUtils;
-
-function NumeroExtensoCentena(sNumero: String; nTamanhoNumero: Integer): String;
-  external 'Missao7Dll.dll';
-
-function NumeroExtensoMilhar(sNumero: String; nTamanhoNumero: Integer): String;
-  external 'Missao7Dll.dll';
-
-function ExtrairNumeroInteiro(sNumero: String): String;
-  external 'Missao7Dll.dll';
-
-function ExtrairDecimais(sNumero: String): String;
-  external 'Missao7Dll.dll';
 
 function NumeroPorExtenso(sNumero: String): String;
   external 'Missao7Dll.dll';
@@ -46,9 +34,29 @@ begin
 
   nTamanhoNumero := Length(sNumero);
   if Length(sDecimais) = 1 then
-    sNumero := copy(sNumero, 1, nTamanhoNumero-1);
+    sNumero := copy(sNumero, 1, Pred(nTamanhoNumero));
 
   Result := sNumero;
+end;
+
+function NumeroValido(sNumero: String): Boolean;
+var
+  nNumero: Extended;
+begin
+  Result := True;
+
+  sNumero := StringReplace(sNumero, '.', ',', [rfReplaceAll]);
+  if not TryStrToFloat(sNumero, nNumero) then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  sNumero := FormatarNumero(sNumero);
+  if Length(sNumero) > 15 then
+    Exit;
+
+  Result := True;
 end;
 
 procedure main;
@@ -57,18 +65,19 @@ var
   sNumeroPorExtenso: String;
   nTamanhoNumero: Integer;
 begin
+  sNumero := EmptyStr;
   repeat
-    Write('Digite um número inteiro ou digite ''sair'' para sair: ');
+    Write('Digite um número ou digite ''sair'' para sair: ');
     Readln(sNumero);
 
-    sNumero := sNumero.ToLower;
-    if sNumero = 'sair' then
+    if sNumero.ToLower = 'sair' then
       Break;
 
-    try
-      sNumero := FormatarNumero(sNumero);
-    except
-      raise Exception.Create('Número inválido!');
+    if not NumeroValido(sNumero) then
+    begin
+      Writeln('Número inválido!');
+      Writeln(EmptyStr);
+      Continue;
     end;
 
     nTamanhoNumero := Length(sNumero);
@@ -78,6 +87,7 @@ begin
       Continue;
     end;
 
+    sNumero := FormatarNumero(sNumero);
     sNumeroPorExtenso := NumeroPorExtenso(sNumero);
     Writeln('Número por extenso: '+sNumeroPorExtenso);
     Writeln;
@@ -85,5 +95,6 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.

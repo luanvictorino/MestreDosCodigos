@@ -111,27 +111,27 @@ begin
   end;
 
   if sCentena = '000' then
-    sNumeroExtenso := NumeroExtensoCentena(sMilhar, nTamanhoNumero) + ' mil'
+    sNumeroExtenso := NumeroExtensoCentena(sMilhar, nTamanhoNumero) + ' mil '
   else if sMilhar = '000' then
     sNumeroExtenso := NumeroExtensoCentena(sCentena, nTamanhoNumero)
   else
-    sNumeroExtenso := NumeroExtensoCentena(sMilhar, nTamanhoNumero) + ' mil , ' +
+    sNumeroExtenso := NumeroExtensoCentena(sMilhar, nTamanhoNumero) + ' mil, ' +
               NumeroExtensoCentena(sCentena, nTamanhoNumero);
 
-  if sNumeroExtenso = ' mil' then
+  if sNumeroExtenso = ' mil ' then
     sNumeroExtenso := '';
 
   if nTamanhoNumero > 6 then
   begin
     if sMilhao = '1' then
     begin
-      sPlural := ' milhão , ';
+      sPlural := ' milhão, ';
       if sNumeroExtenso.IsEmpty then
         sPlural := ' milhão';
     end
     else
     begin
-      sPlural := ' milhões , ';
+      sPlural := ' milhões, ';
       if sNumeroExtenso.IsEmpty then
         sPlural := ' milhões';
     end;
@@ -153,13 +153,13 @@ begin
   begin
     if sBilhao = '1' then
     begin
-      sPlural := ' bilhão , ';
+      sPlural := ' bilhão, ';
       if sNumeroExtenso.IsEmpty then
         sPlural := ' bilhão';
     end
     else
     begin
-      sPlural := ' bilhões , ';
+      sPlural := ' bilhões, ';
       if sNumeroExtenso.IsEmpty then
         sPlural := ' bilhões';
     end;
@@ -235,13 +235,13 @@ begin
     for i := nTamanhoNumero downto 1 do
       sNumeroInvertido := sNumeroInvertido + sNumeroPorExtenso[i];
 
-    sNumeroPronto := StringReplace(sNumeroInvertido, ',', 'e', []);
+    sNumeroPronto := StringReplace(sNumeroInvertido, ',', 'e ', []);
     sNumeroPorExtenso := '';
-    for i := nTamanhoNumero downto 1 do
+    for i := Succ(nTamanhoNumero) downto 1 do
       sNumeroPorExtenso := sNumeroPorExtenso + sNumeroPronto[i];
   end;
 
-  Result := sNumeroPorExtenso;
+  Result := sNumeroPorExtenso + '.';
 end;
 
 exports
