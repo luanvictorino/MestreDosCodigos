@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////
-//  Autor: Luan Victorino                                   //
-//    Date: 13/12/2019                                      //
-// Mission: Em uma aplicação console, escreva uma classe    //
+//   Autor: Luan Victorino                                  //
+//    Data: 13/12/2019                                      //
+//  Missão: Em uma aplicação console, escreva uma classe    //
 //          que implemente o algoritmo de pilha. Esta       //
 //          classe deverá utilizar Generics para poder      //
 //          armazenar qualquer tipo de conteúdo e conter os //
@@ -41,66 +41,72 @@ var
 begin
   oPilhaInteger := TPilha<Integer>.Create;
   oPilhaString := TPilha<String>.Create;
+  try
+    Writeln('Digite 3 valores String: ');
+    repeat
+      sValor := '';
+      Write('Digite o '+(Succ(oPilhaString.Size).ToString)+'º valor: ');
+      Readln(sValor);
 
-  Writeln('Digite 3 valores String: ');
-  repeat
-    sValor := '';
-    Write('Digite o '+IntToStr((oPilhaString.Size)+1)+'º valor: ');
-    readln(sValor);
+      if sValor.IsEmpty then
+      begin
+        Writeln('Valor inválido!!');
+        Continue;
+      end;
 
-    if sValor.IsEmpty then
-    begin
-      Writeln('Valor inválido!!');
-      Continue;
-    end;
+      oPilhaString.Push(sValor);
+      if oPilhaString.Size = 3 then
+        Break;
+    until False;
 
-    oPilhaString.Push(sValor);
-    if oPilhaString.Size = 3 then
-      Break;
-  until False;
+    Writeln(EmptyStr);
+    Writeln('Digite 15 valores numéricos: ');
+    repeat
+      sValor := '';
+      Write('Digite o '+(Succ(oPilhaInteger.Size).ToString)+'º valor: ');
+      Readln(sValor);
 
-  Writeln(EmptyStr);
-  Writeln('Digite 15 valores numéricos: ');
-  repeat
-    sValor := '';
-    Write('Digite o '+IntToStr((oPilhaInteger.Size)+1)+'º valor: ');
-    readln(sValor);
+      if sValor.IsEmpty then
+      begin
+        Writeln('Valor inválido!!');
+        Continue;
+      end;
 
-    if sValor.IsEmpty then
-    begin
-      Writeln('Valor inválido!!');
-      Continue;
-    end;
+      try
+        nValor := StrToInt(sValor);
+      except
+        Writeln('Valor inválido!!');
+        Continue;
+      end;
 
-    try
-      nValor := StrToInt(sValor);
-    except
-      Writeln('Valor inválido!!');
-      Continue;
-    end;
+      oPilhaInteger.Push(nValor);
+      if oPilhaInteger.Size = 15 then
+        Break;
+    until False;
 
-    oPilhaInteger.Push(nValor);
-    if oPilhaInteger.Size = 15 then
-      Break;
-  until False;
+    Writeln(EmptyStr);
+    Writeln('Pilha de String quantidade: '+ oPilhaString.Size.ToString);
+    Writeln('pilha de Integer quantidade: '+ oPilhaInteger.Size.ToString);
 
-  Writeln(EmptyStr);
-  Writeln('Pilha de String quantidade: '+ oPilhaString.Size.ToString);
-  Writeln('pilha de Integer quantidade: '+ oPilhaInteger.Size.ToString);
+    Writeln(EmptyStr);
+    while not(oPilhaString.IsEmpty) do
+      Writeln('Removendo String: '+ oPilhaString.Pop);
 
-  Writeln(EmptyStr);
-  while not(oPilhaString.IsEmpty) do
-    Writeln('Removendo String: '+ oPilhaString.Pop);
+    while not(oPilhaInteger.IsEmpty) do
+      Writeln('Removendo Integer: '+ oPilhaInteger.Pop.ToString);
 
-  while not(oPilhaInteger.IsEmpty) do
-    Writeln('Removendo Integer: '+ oPilhaInteger.Pop.ToString);
+    Writeln(EmptyStr);
+    Writeln('Pilha de String quantidade: '+ oPilhaString.Size.ToString);
+    Writeln('pilha de Integer quantidade: '+ oPilhaInteger.Size.ToString);
+  finally
+    oPilhaString.Free;
+    oPilhaInteger.Free;
+  end;
 
-  Writeln(EmptyStr);
-  Writeln('Pilha de String quantidade: '+ oPilhaString.Size.ToString);
-  Writeln('pilha de Integer quantidade: '+ oPilhaInteger.Size.ToString);
   Readln;
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.

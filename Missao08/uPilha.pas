@@ -42,7 +42,7 @@ end;
 function TPilha<T>.Pop: T;
 begin
   Result := FLista.Last;
-  FLista.Delete((Size)-1);
+  FLista.Delete(Pred(Size));
 end;
 
 function TPilha<T>.Size: Integer;
