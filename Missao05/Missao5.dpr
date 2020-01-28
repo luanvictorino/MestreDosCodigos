@@ -1,7 +1,7 @@
-//////////////////////////////////////////////////////////////
+﻿//////////////////////////////////////////////////////////////
 //   Autor: Luan Victorino                                  //
-//    Date: 06/12/2019                                      //
-// Mission: Em uma aplicação console, construa um programa  //
+//    Data: 06/12/2019                                      //
+//  Missão: Em uma aplicação console, construa um programa  //
 //          que leia uma lista de frases. Apresente ao      //
 //          usuário apenas as frases que formam um          //
 //          palíndromo                                      //
@@ -23,81 +23,81 @@ begin
   Result := string(USAscii20127(sFrase));
 end;
 
-function VerificarSeEhPalindromo(sFrase: String): boolean;
+function ValidarPalindromo(sFrase: String): boolean;
 var
   sFraseInvertida: String;
   sFraseFormatada: String;
-  i: Integer;
+  nIndice: Integer;
 begin
   Result := False;
 
   sFrase := RemoverAcentos(sFrase).ToLower;
   sFrase := StringReplace(sFrase, ' ', EmptyStr, [rfReplaceAll]);
-  for i := Length(sFrase) downto 1 do
+  for nIndice := Length(sFrase) downto 1 do
   begin
-    if MatchStr(sFrase[i],[',','.','!', '"','?',':', '-', '(', ')', ';']) then
+    if MatchStr(sFrase[nIndice],[',','.','!', '"','?',':', '-', '(', ')', ';']) then
       continue;
 
-    sFraseInvertida := sFraseInvertida + sFrase[i];
+    sFraseInvertida := sFraseInvertida + sFrase[nIndice];
   end;
 
-  for i := 1 to Length(sFrase) do
+  for nIndice := 1 to Length(sFrase) do
   begin
-    if MatchStr(sFrase[i],[',','.','!', '"','?',':', '-', '(', ')', ';']) then
+    if MatchStr(sFrase[nIndice],[',','.','!', '"','?',':', '-', '(', ')', ';']) then
       Continue;
 
-    sFraseFormatada := sFraseFormatada + sFrase[i];
+    sFraseFormatada := sFraseFormatada + sFrase[nIndice];
   end;
 
   if sFraseFormatada = sFraseInvertida then
     Result := True;
 end;
 
-function PegarFrasesPalindromo(var aListaFrases: TArray<String>): TArray<String>;
+function PegarFrasesPalindromos(var aListaFrases: TArray<String>): TArray<String>;
 var
   sFrase: String;
   nTamanhoLista: Integer;
   aListaPalindromos: TArray<String>;
-  i: Integer;
-  j: Integer;
+  nIndiceFrase: Integer;
+  nIndicePalindromo: Integer;
 begin
   nTamanhoLista:= Length(aListaFrases);
   sFrase := '';
-  j := 0;
+  nIndicePalindromo := 0;
   SetLength(result, nTamanhoLista);
 
-  for i := 0 to nTamanhoLista do
+  for nIndiceFrase := 0 to Pred(nTamanhoLista) do
   begin
-    for sFrase in SplitString(aListaFrases[i], '') do
+    for sFrase in SplitString(aListaFrases[nIndiceFrase], '') do
     begin
-      if VerificarSeEhPalindromo(sFrase) then
+      if ValidarPalindromo(sFrase) then
       begin
         SetLength(aListaPalindromos, Succ(Length(aListaPalindromos)));
-        aListaPalindromos[j] := aListaFrases[i];
-        result[j] := aListaPalindromos[j];
-        j := j+1;
+        aListaPalindromos[nIndicePalindromo] := aListaFrases[nIndiceFrase];
+        Result[nIndicePalindromo] := aListaPalindromos[nIndicePalindromo];
+        nIndicePalindromo := Succ(nIndicePalindromo);
       end
       else
       begin
-        result[j] := EmptyStr;
+        result[nIndicePalindromo] := EmptyStr;
       end;
     end;
   end;
 end;
 
-procedure main;
+procedure Main;
 var
   sFrase: String;
   aListaFrases: TArray<String>;
   aListaFrasesPalindromo: TArray<String>;
   nTamanhoLista: Integer;
-  i: Integer;
+  nIndice: Integer;
 begin
   repeat
     Write('Digite uma lista de frases ou digite ''sair'' para sair: ');
     readln(sFrase);
 
-    if sFrase = 'sair' then
+    if sFrase.ToLower = 'sair' then
       Break;
 
     SetLength(aListaFrases, Succ(Length(aListaFrases)));
@@ -106,18 +106,19 @@ begin
   until False;
 
   nTamanhoLista := 0;
-  Writeln('======== Palindromos ========');
   SetLength(aListaFrasesPalindromo, nTamanhoLista);
-  aListaFrasesPalindromo := PegarFrasesPalindromo(aListaFrases);
-  nTamanhoLista := Length(aListaFrasesPalindromo)-1;
+  aListaFrasesPalindromo := PegarFrasesPalindromos(aListaFrases);
+  nTamanhoLista := Pred(Length(aListaFrasesPalindromo));
 
-  for i := 0 to nTamanhoLista do
+  Writeln('======== Palindromos ========');
+  for nIndice := 0 to nTamanhoLista do
   begin
-    Writeln(aListaFrasesPalindromo[i]);
+    Writeln(aListaFrasesPalindromo[nIndice]);
   end;
   readln;
 end;
 
 begin
-  main;
+  ReportMemoryLeaksOnShutdown := True;
+  Main;
 end.
