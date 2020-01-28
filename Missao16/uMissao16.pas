@@ -7,7 +7,7 @@
 //          qualquer classe passada por parâmetro. A        //
 //          apresentação da listagem fica por sua conta.    //
 //////////////////////////////////////////////////////////////
-unit uMain;
+unit uMissao16;
 
 interface
 
@@ -16,7 +16,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RTTI, System.Generics.Collections;
 
 type
-  TfrmMain = class(TForm)
+  TfMissao16 = class(TForm)
     lbPropriedades: TLabel;
     lbMetodos: TLabel;
     mmPropriedades: TMemo;
@@ -31,7 +31,7 @@ type
   end;
 
 var
-  frmMain: TfrmMain;
+  fMissao16: TfMissao16;
 
 implementation
 
@@ -41,7 +41,7 @@ uses uLeitorClasse;
 
 { TLeitorRTTI }
 
-procedure TfrmMain.FormShow(Sender: TObject);
+procedure TfMissao16.FormShow(Sender: TObject);
 var
   oLeitorClasse: TLeitorClasse;
 begin

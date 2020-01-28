@@ -90,8 +90,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="uMain.pas">
-            <Form>frmMain</Form>
+        <DCCReference Include="uMissao16.pas">
+            <Form>fMissao16</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="uLeitorClasse.pas"/>

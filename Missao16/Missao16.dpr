@@ -2,7 +2,7 @@ program Missao16;
 
 uses
   Vcl.Forms,
-  uMain in 'uMain.pas' {frmMain},
+  uMissao16 in 'uMissao16.pas' {fMissao16},
   uLeitorClasse in 'uLeitorClasse.pas';
 
 {$R *.res}
@@ -10,6 +10,6 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TfMissao16, fMissao16);
   Application.Run;
 end.
