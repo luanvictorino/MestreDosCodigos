@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////
-//  Autor: Luan Victorino                                   //
-//    Date: 06/12/2019                                      //
-// Mission: Escreva uma aplicação console que receba uma    //
+//   Autor: Luan Victorino                                  //
+//    Data: 06/12/2019                                      //
+//  Missão: Escreva uma aplicação console que receba uma    //
 //          lista de nomes completos (nome e sobrenome)     //
 //          informados pelo usuário. Estes nomes deverão    //
 //          ser convertidos para caixa-mista, ou seja,      //
@@ -20,7 +20,7 @@ uses
   System.SysUtils,
   System.StrUtils;
 
-function VerificarEhPreposicao(sNome: String): boolean;
+function ValidarPreposicao(sNome: String): boolean;
 begin
   Result := False;
   if MatchStr(sNome,['a','e','o','da','de','do','das','dos']) then
@@ -29,18 +29,18 @@ end;
 
 function ConverterNomes(sNome: String): String;
 begin
-  if not VerificarEhPreposicao(sNome) then
+  if not ValidarPreposicao(sNome) then
   begin
-    result := string(copy(sNome[1],1)).ToUpper + string(copy(sNome,2)).ToLower;
+    Result := string(copy(sNome[1],1)).ToUpper + string(copy(sNome,2)).ToLower;
     Exit;
   end;
 
-  result := sNome;
+  Result := sNome;
 end;
 
 procedure SepararNomes(var aLista: TArray<String>; nTamanhoLista: Integer);
 var
-  i: Integer;
+  nIndice: Integer;
   sEspaço: String;
   sNome: String;
   sNomeConvertido: String;
@@ -50,17 +50,17 @@ begin
   nTamanhoLista := Length(aLista);
   SetLength(aListaConvertida, nTamanhoLista);
 
-  for i := 0 to nTamanhoLista-1 do
-      aLista[i] := (aLista[i]).ToLower;
+  for nIndice := 0 to Pred(nTamanhoLista) do
+      aLista[nIndice] := (aLista[nIndice]).ToLower;
 
-  for i := 0 to nTamanhoLista-1 do
+  for nIndice := 0 to Pred(nTamanhoLista) do
   begin
-    for sNome in SplitString(aLista[i], sEspaço) do
+    for sNome in SplitString(aLista[nIndice], sEspaço) do
     begin
       sNomeConvertido := ConverterNomes(sNome);
-      aListaConvertida[i] := aListaConvertida[i] + sNomeConvertido + ' ';
+      aListaConvertida[nIndice] := aListaConvertida[nIndice] + sNomeConvertido + ' ';
     end;
-    aLista[i] := aListaConvertida[i];
+    aLista[nIndice] := aListaConvertida[nIndice];
   end;
 end;
 
@@ -69,7 +69,7 @@ var
   sNome: String;
   aListaNomes: TArray<String>;
   nTamanhoLista: Integer;
-  i: Integer;
+  nIndice: Integer;
 begin
   nTamanhoLista := 0;
   repeat
@@ -80,19 +80,20 @@ begin
       Break;
 
     SetLength(aListaNomes, Succ(Length(aListaNomes)));
-    nTamanhoLista := Length(aListaNomes)-1;
+    nTamanhoLista := Pred(Length(aListaNomes));
     aListaNomes[nTamanhoLista] := sNome;
   until False;
 
   SepararNomes(aListaNomes, nTamanhoLista);
 
   Writeln('========== Lista ==========');
-  for i := 0 to nTamanhoLista do
-    Writeln(aListaNomes[i]);
+  for nIndice := 0 to nTamanhoLista do
+    Writeln(aListaNomes[nIndice]);
 
-  readln;
+  Readln;
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.
