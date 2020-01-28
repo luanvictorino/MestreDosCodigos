@@ -41,7 +41,7 @@ begin
   mmXml.Lines.Clear;
   oXMLResponseType := uXmlMissao19.LoadResponse('../../xmlMissao19.xml');
 
-  for nIndice := 0 to oXMLResponseType.Result.Count-1 do
+  for nIndice := 0 to Pred(oXMLResponseType.Result.Count) do
   begin
     oXMLItemType := oXMLResponseType.Result.Item[nIndice];
 
