@@ -5,7 +5,7 @@ interface
   type
     TMergeSort = class
       function RetornaListaInteiro(sListaNumeros: String): TArray<Integer>;
-      function MergeSort(var aArrayPrincipal: TArray<Integer>;
+      function MergeSort(aArrayPrincipal: TArray<Integer>;
         nInicio: Integer; nFim: Integer): TArray<Integer>;
       function ListaComDoisValores(aListaNumeros: TArray<Integer>): TArray<Integer>;
     end;
@@ -38,14 +38,14 @@ begin
   aListaNumerosStr := SplitString(sListaNumeros, ',');
 
   SetLength(result, Length(aListaNumerosStr));
-  for i := 0 to Length(aListaNumerosStr)-1 do
+  for i := 0 to Pred(Length(aListaNumerosStr)) do
     result[i] := aListaNumerosStr[i].ToInteger;
 end;
 
-function TMergeSort.MergeSort(var aArrayPrincipal: TArray<Integer>;
+function TMergeSort.MergeSort(aArrayPrincipal: TArray<Integer>;
   nInicio: Integer; nFim: Integer): TArray<Integer>;
 var
-  tmp,nContadorEsquerda,nContadorDireita,nContadorPrincipal,nMeio,b, a: Integer;
+  nContadorEsquerda,nContadorDireita,nContadorPrincipal,nMeio,b, a: Integer;
   aEsquerda,aDireita,aArrayClone: TArray<Integer>;
 begin
   nMeio := (nFim+nInicio) div 2;

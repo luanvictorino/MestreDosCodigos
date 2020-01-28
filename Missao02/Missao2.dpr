@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////
-//  Autor: Luan Victorino                                   //
-//    Date: 05/12/2019                                      //
-// Mission: Em uma aplicação console, construa um programa  //
+//   Autor: Luan Victorino                                  //
+//    Data: 05/12/2019                                      //
+//  Missão: Em uma aplicação console, construa um programa  //
 //          que leia uma lista de números informada pelo    //
 //          usuário. Em seguida, através do algoritmo       //
 //          merge-sort, faça a ordenação da lista e         //
@@ -33,8 +33,13 @@ begin
   aListaNumeros := oMergeSort.MergeSort(aListaNumeros, 0, High(aListaNumeros));
 
   Write('A lista ordenada é: ');
-  for nContador := 0 to Length(aListaNumeros)-1 do
-    Write(aListaNumeros[nContador]);
+  for nContador := 0 to Pred(Length(aListaNumeros)) do
+  begin
+    if not(nContador = Pred(Length(aListaNumeros))) then
+      Write(IntToStr(aListaNumeros[nContador]) + ', ')
+    else
+      Write(aListaNumeros[nContador]);
+  end;
 
   readln;
 end;
