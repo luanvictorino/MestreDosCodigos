@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////
 //   Autor: Luan Victorino                                  //
-//    Data: 19/10/2019                                      //
+//    Data: 19/12/2019                                      //
 //  Missão: Criar um Class Helper para a classe TStringList //
 //          com as seguintes funções:                       //
 //            IsEmpty: Verifica se lista está vazia;        //
@@ -110,7 +110,7 @@ begin
   if self.HasDuplicate then
     raise Exception.Create('Valores duplicados!');
 
-  for nIndex := 0 to (self.Count)-1 do
+  for nIndex := 0 to self.Count-1 do
   begin
     if (self.Names[nIndex] = EmptyStr) or
        (self.ValueFromIndex[nIndex] = EmptyStr) then
@@ -119,12 +119,51 @@ begin
 end;
 
 procedure main;
+var
+  oLista: TStringList;
 begin
+  oLista := TStringList.Create;
+  try
+    try
+      oLista.ToJSON;
+    except
+      on E: Exception do
+        Writeln(e.Message);
+    end;
+
+    try
+      oLista.Add('valor duplicado');
+      oLista.Add('valor duplicado');
+      oLista.ToJSON;
+    except
+      on E: Exception do
+        Writeln(e.Message);
+    end;
+
+    try
+      oLista.Clear;
+      oLista.Add('item inválido');
+      oLista.ToJSON;
+    except
+      on E: Exception do
+        Writeln(e.Message);
+    end;
+
+    oLista.Clear;
+    oLista.Values['Código'] := 10.ToString;
+    oLista.Values['Nome'] := 'Luan';
+    oLista.Values['Ativo'] := 'True';
+    oLista.Values['Cidade'] := 'null';
+
+    Writeln(oLista.ToJSON);
+  finally
+    oLista.Free;
+  end;
+
   Readln;
 end;
 
 begin
-  main;
   ReportMemoryLeaksOnShutdown := True;
-  Readln;
+  main;
 end.
