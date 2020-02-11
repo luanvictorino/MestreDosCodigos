@@ -29,7 +29,7 @@ begin
     Write('Digite uma lista de números separados por vírgula: ');
     readln(sListaNumeros);
 
-    aListaNumeros := oMergeSort.RetornaListaNumerosInteiro(sListaNumeros);
+    aListaNumeros := oMergeSort.ConverterListaEmInteiro(sListaNumeros);
     aListaNumeros := oMergeSort.MergeSort(aListaNumeros);
 
     Write('A lista ordenada é: ');

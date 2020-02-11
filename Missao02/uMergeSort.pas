@@ -4,7 +4,7 @@ interface
 
   type
     TMergeSort = class
-      function RetornaListaNumerosInteiro(sListaNumeros: String): TArray<Integer>;
+      function ConverterListaEmInteiro(sListaNumeros: String): TArray<Integer>;
       function MergeSort(const pLista: TArray<Integer>): TArray<Integer>;
     end;
 
@@ -15,7 +15,7 @@ uses
   System.StrUtils,
   System.Math;
 
-function TMergeSort.RetornaListaNumerosInteiro(sListaNumeros: String): TArray<Integer>;
+function TMergeSort.ConverterListaEmInteiro(sListaNumeros: String): TArray<Integer>;
 var
   aListaNumerosStr: TArray<String>;
   i: Integer;
