@@ -34,7 +34,6 @@ type
     FApi: TArray<TCamposApi>;
   public
     Destructor Destroy; override;
-
     property Api: TArray<TCamposApi> read FApi;
   end;
 
@@ -104,7 +103,7 @@ begin
   begin
     Close;
     FieldDefs.Clear;
-    FieldDefs.Add('Id', ftInteger);
+    FieldDefs.Add('id', ftInteger);
     FieldDefs.Add('Name', ftString,80, False);
     FieldDefs.Add('Html_Url', ftString,100, False);
     FieldDefs.Add('Description', ftString,120, False);
@@ -133,7 +132,7 @@ destructor TApi.Destroy;
 var
   oCamposApi: TCamposApi;
 begin
-  for oCamposApi in Self.FApi do
+  for oCamposApi in FApi do
     oCamposApi.Free;
 
   inherited;
