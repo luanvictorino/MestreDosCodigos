@@ -1,4 +1,4 @@
-unit uManipularXml;
+unit uControlarXml;
 
 interface
 
@@ -45,7 +45,7 @@ type
     procedure Remover;
     procedure Salvar;
     procedure SalvarArquivoXml;
-    procedure SetarCampos;
+    procedure CarregarCampos;
     procedure HabilitarCampos;
     procedure ControlarBotoes;
     procedure LimparCampos;
@@ -58,7 +58,7 @@ type
 implementation
 
 uses
-  System.Math, System.SysUtils, Xml.XMLIntf, Xml.XMLDoc, Vcl.Dialogs;
+  System.Math, System.SysUtils, Xml.XMLIntf, Xml.XMLDoc, Vcl.Dialogs, Vcl.Graphics;
 
 { TControlarXml }
 
@@ -89,7 +89,7 @@ begin
   FBtnRemover := pBtnRemover;
 end;
 
-procedure TControlarXml.SetarCampos;
+procedure TControlarXml.CarregarCampos;
 var
   oXMLItemType: IXMLItemType;
 begin
@@ -136,7 +136,7 @@ procedure TControlarXml.Primeiro;
 begin
   FIndice := ZeroValue;
   FControlarBotoes := 0;
-  SetarCampos;
+  CarregarCampos;
 end;
 
 procedure TControlarXml.Anterior;
@@ -147,21 +147,21 @@ begin
     FIndice := Pred(FXMLResponseType.Result.Count);
 
   FControlarBotoes := 0;
-  SetarCampos;
+  CarregarCampos;
 end;
 
 procedure TControlarXml.Proximo;
 begin
   FIndice := Succ(FIndice);
   FControlarBotoes := 0;
-  SetarCampos;
+  CarregarCampos;
 end;
 
 procedure TControlarXml.Ultimo;
 begin
   FIndice := Pred(FXMLResponseType.Result.Count);
   FControlarBotoes := 0;
-  SetarCampos;
+  CarregarCampos;
 end;
 
 procedure TControlarXml.ValidarDados;
@@ -177,13 +177,17 @@ begin
   end;
 
   FValorSendoAlterado := False;
-  nId := StrToIntDef(FId.Text, ZeroValue);
+  nId := StrToIntDef(FId.Text, 0);
   for nIndex := 0 to Pred(FXMLResponseType.Result.Count) do
   begin
     oXMLItemType := FXMLResponseType.Result.Item[nIndex];
     if nId = oXMLItemType.Id then
     begin
-      FValorSendoAlterado := True;
+      if (FBtnAdicionar.Enabled = True) then
+        FValorSendoAlterado := True
+      else
+        raise Exception.Create('Campo ''id'' duplicado!');
+
       Break;
     end;
   end;
@@ -199,6 +203,18 @@ begin
     FSobrenome.SetFocus;
     raise Exception.Create('Campo ''Sobrenome'' inválido!');
   end;
+
+  if Trim(FGenero.Text) = EmptyStr then
+  begin
+    FGenero.SetFocus;
+    raise Exception.Create('Campo ''Gênero'' inválido!');
+  end;
+
+  if Trim(FStatus.Text) = EmptyStr then
+  begin
+    FStatus.SetFocus;
+    raise Exception.Create('Campo ''Status'' inválido!');
+  end;
 end;
 
 procedure TControlarXml.CarregarXml;
@@ -208,7 +224,7 @@ begin
   FXMLResponseType := xmlMissao20.LoadResponse('../../xmlMissao20.xml');
   oXMLItemType := FXMLResponseType.Result.Item[ZeroValue];
   HabilitarCampos;
-  SetarCampos;
+  CarregarCampos;
   FControlarBotoes := 0;
 end;
 
@@ -230,7 +246,7 @@ procedure TControlarXml.Adicionar;
 begin
   LimparCampos;
   FId.Text := NovoId;
-  FId.SetFocus;
+  FNome.SetFocus;
   FIndice := Pred(FXMLResponseType.Result.Count);
   FControlarBotoes := 1;
   ControlarBotoes;
@@ -300,7 +316,7 @@ begin
   if FIndice < ZeroValue then
     FIndice := 0;
 
-  SetarCampos;
+  CarregarCampos;
 end;
 
 procedure TControlarXml.LimparCampos;
@@ -308,13 +324,13 @@ begin
   FId.Clear;
   FNome.Clear;
   FSobrenome.Clear;
-  FGenero.ItemIndex := 0;
+  FGenero.ItemIndex := -1;
   FDataNascimento.Date := Date;
   FEmail.Clear;
   FWebsite.Clear;
   FTelefone.Clear;
   FEndereco.Clear;
-  FStatus.ItemIndex := 0;
+  FStatus.ItemIndex := -1;
 end;
 
 function TControlarXml.StatusStrToInteger(pStatus: String): Integer;
