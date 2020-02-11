@@ -43,7 +43,7 @@ function NumeroValido(sNumero: String): Boolean;
 var
   nNumero: Extended;
 begin
-  Result := True;
+  Result := False;
 
   sNumero := StringReplace(sNumero, '.', ',', [rfReplaceAll]);
   if not TryStrToFloat(sNumero, nNumero) then
@@ -63,7 +63,6 @@ procedure main;
 var
   sNumero: String;
   sNumeroPorExtenso: String;
-  nTamanhoNumero: Integer;
 begin
   sNumero := EmptyStr;
   repeat
@@ -75,15 +74,8 @@ begin
 
     if not NumeroValido(sNumero) then
     begin
-      Writeln('Número inválido!');
+      Writeln('Número inválido ou maior que 1 trilhão!');
       Writeln(EmptyStr);
-      Continue;
-    end;
-
-    nTamanhoNumero := Length(sNumero);
-    if nTamanhoNumero > 15 then
-    begin
-      Writeln('Digite um número menor do que 1 trilhão!!');
       Continue;
     end;
 

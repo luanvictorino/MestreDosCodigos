@@ -13,6 +13,7 @@ type
     function CriarInstancia<T: class, constructor>: T;
   public
     constructor Create;
+    destructor Destroy; override;
     function RetornarInstancia<T: class, constructor>: T;
   end;
 
@@ -23,6 +24,17 @@ implementation
 constructor TCacheObjetos.Create;
 begin
   FLista := TObjectDictionary<string, TObject>.Create;
+end;
+
+destructor TCacheObjetos.Destroy;
+var
+  oItem: TObject;
+begin
+  for oItem in FLista.Values do
+    oItem.Free;
+
+  FLista.Free;
+  inherited;
 end;
 
 function TCacheObjetos.RetornarInstancia<T>: T;

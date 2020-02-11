@@ -33,28 +33,28 @@ function TLeitorClasse.PegarPropriedades<T>: TList<String>;
 var
   rContexto: TRttiContext;
   oTipo: TRttiType;
-  oPropriedades: TRttiProperty;
+  oPropriedade: TRttiProperty;
 begin
   rContexto := TRttiContext.Create;
   oTipo := rContexto.GetType(TypeInfo(T));
 
   Result := TList<String>.Create;
-  for oPropriedades in oTipo.GetProperties do
-    Result.Add(oPropriedades.Name);
+  for oPropriedade in oTipo.GetProperties do
+    Result.Add(oPropriedade.Name);
 end;
 
 function TLeitorClasse.PegarMetodos<T>: TList<String>;
 var
   rContexto: TRttiContext;
   oTipo: TRttiType;
-  oMetodos: TRttiMethod;
+  oMetodo: TRttiMethod;
 begin
   rContexto := TRttiContext.Create;
   oTipo := rContexto.GetType(TypeInfo(T));
 
   Result := TList<String>.Create;
-  for oMetodos in oTipo.GetMethods do
-    Result.Add(oMetodos.Name);
+  for oMetodo in oTipo.GetMethods do
+    Result.Add(oMetodo.Name);
 end;
 
 procedure TLeitorClasse.ListarPropriedades<T>(pLista: TStrings);

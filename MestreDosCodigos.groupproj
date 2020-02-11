@@ -3,7 +3,64 @@
         <ProjectGuid>{EDC79C53-2790-4DB1-AFAC-38B5E430E2D7}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
+        <Projects Include="Missao01\Missao1.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="Missao02\Missao2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao03\Missao3.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao04\Missao4.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao05\Missao5.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao06\Missao6.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao07\Missao7.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao08\Missao8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao09\Missao9.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao10\Missao10.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao11\Missao11.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao12\Missao12.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao13\Missao13.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao14\Missao14.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao15\Missao15.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao16\Missao16.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao17\Missao17.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao18\Missao18.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao19\Missao19.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao20\Missao20.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -14,6 +71,15 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="Missao1">
+        <MSBuild Projects="Missao01\Missao1.dproj"/>
+    </Target>
+    <Target Name="Missao1:Clean">
+        <MSBuild Projects="Missao01\Missao1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao1:Make">
+        <MSBuild Projects="Missao01\Missao1.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Missao2">
         <MSBuild Projects="Missao02\Missao2.dproj"/>
     </Target>
@@ -23,14 +89,176 @@
     <Target Name="Missao2:Make">
         <MSBuild Projects="Missao02\Missao2.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Missao3">
+        <MSBuild Projects="Missao03\Missao3.dproj"/>
+    </Target>
+    <Target Name="Missao3:Clean">
+        <MSBuild Projects="Missao03\Missao3.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao3:Make">
+        <MSBuild Projects="Missao03\Missao3.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao4">
+        <MSBuild Projects="Missao04\Missao4.dproj"/>
+    </Target>
+    <Target Name="Missao4:Clean">
+        <MSBuild Projects="Missao04\Missao4.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao4:Make">
+        <MSBuild Projects="Missao04\Missao4.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao5">
+        <MSBuild Projects="Missao05\Missao5.dproj"/>
+    </Target>
+    <Target Name="Missao5:Clean">
+        <MSBuild Projects="Missao05\Missao5.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao5:Make">
+        <MSBuild Projects="Missao05\Missao5.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao6">
+        <MSBuild Projects="Missao06\Missao6.dproj"/>
+    </Target>
+    <Target Name="Missao6:Clean">
+        <MSBuild Projects="Missao06\Missao6.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao6:Make">
+        <MSBuild Projects="Missao06\Missao6.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao7">
+        <MSBuild Projects="Missao07\Missao7.dproj"/>
+    </Target>
+    <Target Name="Missao7:Clean">
+        <MSBuild Projects="Missao07\Missao7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao7:Make">
+        <MSBuild Projects="Missao07\Missao7.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao8">
+        <MSBuild Projects="Missao08\Missao8.dproj"/>
+    </Target>
+    <Target Name="Missao8:Clean">
+        <MSBuild Projects="Missao08\Missao8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao8:Make">
+        <MSBuild Projects="Missao08\Missao8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao9">
+        <MSBuild Projects="Missao09\Missao9.dproj"/>
+    </Target>
+    <Target Name="Missao9:Clean">
+        <MSBuild Projects="Missao09\Missao9.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao9:Make">
+        <MSBuild Projects="Missao09\Missao9.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao10">
+        <MSBuild Projects="Missao10\Missao10.dproj"/>
+    </Target>
+    <Target Name="Missao10:Clean">
+        <MSBuild Projects="Missao10\Missao10.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao10:Make">
+        <MSBuild Projects="Missao10\Missao10.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao11">
+        <MSBuild Projects="Missao11\Missao11.dproj"/>
+    </Target>
+    <Target Name="Missao11:Clean">
+        <MSBuild Projects="Missao11\Missao11.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao11:Make">
+        <MSBuild Projects="Missao11\Missao11.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao12">
+        <MSBuild Projects="Missao12\Missao12.dproj"/>
+    </Target>
+    <Target Name="Missao12:Clean">
+        <MSBuild Projects="Missao12\Missao12.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao12:Make">
+        <MSBuild Projects="Missao12\Missao12.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao13">
+        <MSBuild Projects="Missao13\Missao13.dproj"/>
+    </Target>
+    <Target Name="Missao13:Clean">
+        <MSBuild Projects="Missao13\Missao13.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao13:Make">
+        <MSBuild Projects="Missao13\Missao13.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao14">
+        <MSBuild Projects="Missao14\Missao14.dproj"/>
+    </Target>
+    <Target Name="Missao14:Clean">
+        <MSBuild Projects="Missao14\Missao14.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao14:Make">
+        <MSBuild Projects="Missao14\Missao14.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao15">
+        <MSBuild Projects="Missao15\Missao15.dproj"/>
+    </Target>
+    <Target Name="Missao15:Clean">
+        <MSBuild Projects="Missao15\Missao15.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao15:Make">
+        <MSBuild Projects="Missao15\Missao15.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao16">
+        <MSBuild Projects="Missao16\Missao16.dproj"/>
+    </Target>
+    <Target Name="Missao16:Clean">
+        <MSBuild Projects="Missao16\Missao16.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao16:Make">
+        <MSBuild Projects="Missao16\Missao16.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao17">
+        <MSBuild Projects="Missao17\Missao17.dproj"/>
+    </Target>
+    <Target Name="Missao17:Clean">
+        <MSBuild Projects="Missao17\Missao17.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao17:Make">
+        <MSBuild Projects="Missao17\Missao17.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao18">
+        <MSBuild Projects="Missao18\Missao18.dproj"/>
+    </Target>
+    <Target Name="Missao18:Clean">
+        <MSBuild Projects="Missao18\Missao18.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao18:Make">
+        <MSBuild Projects="Missao18\Missao18.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao19">
+        <MSBuild Projects="Missao19\Missao19.dproj"/>
+    </Target>
+    <Target Name="Missao19:Clean">
+        <MSBuild Projects="Missao19\Missao19.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao19:Make">
+        <MSBuild Projects="Missao19\Missao19.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao20">
+        <MSBuild Projects="Missao20\Missao20.dproj"/>
+    </Target>
+    <Target Name="Missao20:Clean">
+        <MSBuild Projects="Missao20\Missao20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao20:Make">
+        <MSBuild Projects="Missao20\Missao20.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Missao2"/>
+        <CallTarget Targets="Missao1;Missao2;Missao3;Missao4;Missao5;Missao6;Missao7;Missao8;Missao9;Missao10;Missao11;Missao12;Missao13;Missao14;Missao15;Missao16;Missao17;Missao18;Missao19;Missao20"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Missao2:Clean"/>
+        <CallTarget Targets="Missao1:Clean;Missao2:Clean;Missao3:Clean;Missao4:Clean;Missao5:Clean;Missao6:Clean;Missao7:Clean;Missao8:Clean;Missao9:Clean;Missao10:Clean;Missao11:Clean;Missao12:Clean;Missao13:Clean;Missao14:Clean;Missao15:Clean;Missao16:Clean;Missao17:Clean;Missao18:Clean;Missao19:Clean;Missao20:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Missao2:Make"/>
+        <CallTarget Targets="Missao1:Make;Missao2:Make;Missao3:Make;Missao4:Make;Missao5:Make;Missao6:Make;Missao7:Make;Missao8:Make;Missao9:Make;Missao10:Make;Missao11:Make;Missao12:Make;Missao13:Make;Missao14:Make;Missao15:Make;Missao16:Make;Missao17:Make;Missao18:Make;Missao19:Make;Missao20:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

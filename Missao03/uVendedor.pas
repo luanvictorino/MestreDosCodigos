@@ -15,7 +15,6 @@ type
   public
     function ValidarDados: boolean;
     function CalcularValorReceber: Real;
-    procedure MostrarValorReceber;
     property Nome: String read FNome write SetNome;
     property SalarioFixo: String read FSalarioFixo write SetSalarioFixo;
     property TotalVendas: String read FTotalVendas write SetTotalVendas;
@@ -36,18 +35,6 @@ var
 begin
   nTotalAcrescimo := StrToFloat(TotalVendas)*nAcrescimo;
   Result := StrToFloat(SalarioFixo) + nTotalAcrescimo;
-end;
-
-procedure TVendedor.MostrarValorReceber;
-var
-  nValorReceber: Real;
-begin
-  nValorReceber := CalcularValorReceber;
-  Writeln('===================');
-  Writeln('Vendedor: '+Nome);
-  Writeln('Salário Fixo: R$'+FormatFloat('#0.00',StrToFloat(SalarioFixo)));
-  Writeln('Valor a receber: R$'+FormatFloat('#0.00',nValorReceber));
-  Writeln('===================');
 end;
 
 function TVendedor.ValidarDados: boolean;

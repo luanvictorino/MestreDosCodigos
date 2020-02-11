@@ -1,9 +1,8 @@
-*.local
 *.identcache
 *.stat
 *.res
+*.local
 *.exe
 *.*~*~
 *.txt
 *.dcu
-/Missao8/

@@ -220,9 +220,17 @@ begin
   sNumero := ExtrairNumeroInteiro(sNumero);
   nTamanhoNumero := Length(sNumero);
   if nTamanhoNumero > 3 then
+  begin
     sNumeroPorExtenso := NumeroExtensoMilhar(sNumero, nTamanhoNumero)
+  end
   else
+  begin
     sNumeroPorExtenso := NumeroExtensoCentena(sNumero, nTamanhoNumero);
+    if (nTamanhoNumero = 1) and (sNumero = '0') then
+    begin
+      sNumeroPorExtenso := 'zero';
+    end;
+  end;
 
   sDecimais := ExtrairDecimais(sNumero);
   if not sDecimais.IsEmpty then

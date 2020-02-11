@@ -25,25 +25,29 @@ var
   oMergeSort: TMergeSort;
 begin
   oMergeSort := TMergeSort.Create;
+  try
+    Write('Digite uma lista de números separados por vírgula: ');
+    readln(sListaNumeros);
 
-  Write('Digite uma lista de números separados por vírgula: ');
-  readln(sListaNumeros);
+    aListaNumeros := oMergeSort.RetornaListaNumerosInteiro(sListaNumeros);
+    aListaNumeros := oMergeSort.MergeSort(aListaNumeros);
 
-  aListaNumeros := oMergeSort.RetornaListaInteiro(sListaNumeros);
-  aListaNumeros := oMergeSort.MergeSort(aListaNumeros, 0, High(aListaNumeros));
-
-  Write('A lista ordenada é: ');
-  for nContador := 0 to Pred(Length(aListaNumeros)) do
-  begin
-    if not(nContador = Pred(Length(aListaNumeros))) then
-      Write(IntToStr(aListaNumeros[nContador]) + ', ')
-    else
-      Write(aListaNumeros[nContador]);
+    Write('A lista ordenada é: ');
+    for nContador := 0 to Pred(Length(aListaNumeros)) do
+    begin
+      if not(nContador = Pred(Length(aListaNumeros))) then
+        Write(IntToStr(aListaNumeros[nContador]) + ', ')
+      else
+        Write(aListaNumeros[nContador]);
+    end;
+  finally
+    oMergeSort.Free;
   end;
 
-  readln;
+  Readln;
 end;
 
 begin
-  main;
+  ReportMemoryLeaksOnShutdown := True;
+  Main;
 end.

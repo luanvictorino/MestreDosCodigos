@@ -52,6 +52,7 @@ begin
     Writeln(EmptyStr);
     oFuncionario2 := oCacheObjetos.RetornarInstancia<TFuncionario>;
     Writeln('Objeto Funcionario2 criado e valores preenchidos:');
+    Writeln(EmptyStr);
     Writeln('Nome: ' + oFuncionario2.Nome);
     Writeln('Email: ' + oFuncionario2.Email);
     Writeln('Telefone: ' + oFuncionario2.Telefone);
@@ -70,15 +71,13 @@ begin
     Writeln('Nome: ' + oFuncionario2.Nome);
     Writeln('Email: ' + oFuncionario2.Email);
     Writeln('Telefone: ' + oFuncionario2.Telefone);
-    readln;
+    Readln;
   finally
     oCacheObjetos.Free;
-    FreeAndNil(oFuncionario1);
-    FreeAndNil(oFuncionario2);
   end;
-  readln;
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.

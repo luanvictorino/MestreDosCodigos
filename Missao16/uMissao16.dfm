@@ -1,8 +1,10 @@
 object fMissao16: TfMissao16
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Miss'#227'o 16'
-  ClientHeight = 405
+  ClientHeight = 407
   ClientWidth = 473
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,21 +17,21 @@ object fMissao16: TfMissao16
   PixelsPerInch = 96
   TextHeight = 13
   object lbPropriedades: TLabel
-    Left = 8
-    Top = 30
+    Left = 11
+    Top = 33
     Width = 63
     Height = 13
     Caption = 'Propriedades'
   end
   object lbMetodos: TLabel
-    Left = 240
-    Top = 30
+    Left = 239
+    Top = 33
     Width = 41
     Height = 13
     Caption = 'M'#233'todos'
   end
   object lbClasse: TLabel
-    Left = 8
+    Left = 11
     Top = 8
     Width = 46
     Height = 16
@@ -56,16 +58,18 @@ object fMissao16: TfMissao16
   object mmPropriedades: TMemo
     Left = 8
     Top = 49
-    Width = 225
+    Width = 220
     Height = 348
+    ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 0
   end
   object mmMetodos: TMemo
-    Left = 240
+    Left = 236
     Top = 49
-    Width = 225
+    Width = 220
     Height = 348
+    ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 1
   end

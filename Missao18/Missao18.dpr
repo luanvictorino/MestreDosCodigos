@@ -5,7 +5,7 @@ program Missao18;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Json;
+  System.SysUtils, System.Json, REST.Json;
 
 function AdicionarTerritorio(const pTerritory: TJSONValue; pLevel: TJSONValue;
   pExperience: TJSONValue; pDateLastMission: TJSONValue): TJSONObject;
@@ -20,7 +20,7 @@ begin
   Result := LJson;
 end;
 
-procedure main;
+procedure Main;
 var
   LJsonObject: TJSONObject;
   LArray: TJSONArray;
@@ -59,13 +59,14 @@ begin
     );
 
     LJsonObject.AddPair(TJSONPair.Create('territories', LArray));
-    Writeln(LJsonObject.ToString);
+    Writeln(LJsonObject.Format);
   finally
     LJsonObject.Free;
   end;
+  Readln;
 end;
 
 begin
-  main;
-  readln;
+  ReportMemoryLeaksOnShutdown := True;
+  Main;
 end.

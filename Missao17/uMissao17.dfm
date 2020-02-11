@@ -1,9 +1,11 @@
 object fMissao17: TfMissao17
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Miss'#227'o 17'
-  ClientHeight = 371
-  ClientWidth = 807
+  ClientHeight = 357
+  ClientWidth = 795
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,22 +16,22 @@ object fMissao17: TfMissao17
   PixelsPerInch = 96
   TextHeight = 13
   object lbInformeValor: TLabel
-    Left = 8
+    Left = 7
     Top = 13
     Width = 86
     Height = 13
     Caption = 'Informe um valor:'
   end
   object edtValor: TEdit
-    Left = 100
+    Left = 99
     Top = 10
-    Width = 121
+    Width = 219
     Height = 21
     TabOrder = 0
     OnKeyPress = edtValorKeyPress
   end
   object btConsultar: TButton
-    Left = 227
+    Left = 324
     Top = 8
     Width = 75
     Height = 25
@@ -40,8 +42,8 @@ object fMissao17: TfMissao17
   object DBGrid1: TDBGrid
     Left = 8
     Top = 39
-    Width = 791
-    Height = 324
+    Width = 773
+    Height = 310
     DataSource = dsMissao17
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
     ReadOnly = True
@@ -55,7 +57,7 @@ object fMissao17: TfMissao17
   object RESTClient: TRESTClient
     BaseURL = 'https://api.github.com/'
     Params = <>
-    Left = 336
+    Left = 449
     Top = 8
   end
   object RESTRequest: TRESTRequest
@@ -73,15 +75,15 @@ object fMissao17: TfMissao17
     Resource = 'search/repositories?q={busca}'
     Response = RESTResponse
     SynchronizedEvents = False
-    Left = 416
+    Left = 529
     Top = 8
   end
   object RESTResponse: TRESTResponse
-    Left = 501
+    Left = 614
     Top = 8
   end
   object dsMissao17: TDataSource
-    Left = 408
+    Left = 521
     Top = 72
   end
 end

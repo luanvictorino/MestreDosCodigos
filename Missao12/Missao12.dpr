@@ -66,12 +66,12 @@ var
   sValor: String;
   oJSON: TJSONObject;
   nIndex: Integer;
-  nListaInteger: Double;
+  nValor: Integer;
 begin
   self.ValidJSON;
   oJSON := TJSONObject.Create;
   try
-    for nIndex := 0 to (self.Count)-1 do
+    for nIndex := 0 to Pred(self.Count) do
     begin
       sValor := self.ValueFromIndex[nIndex];
       if (sValor.ToLower.Trim = 'null') then
@@ -80,18 +80,13 @@ begin
         oJSON.AddPair(Self.Names[nIndex],TJSONTrue.Create)
       else if (sValor.ToLower.Trim = 'false') then
         oJSON.AddPair(Self.Names[nIndex],TJSONFalse.Create)
-      else
+      else if TryStrToInt(sValor, nValor) then
       begin
-        try
-          nListaInteger := StrToFloat(sValor);
-          oJSON.AddPair(Self.Names[nIndex],TJSONNumber.Create(nListaInteger));
-          continue;
-        except
-          raise Exception.Create('Valor inválido!');
-        end;
-
-        oJSON.AddPair(Self.Names[nIndex],Self.ValueFromIndex[nIndex]);
-      end;
+        nValor := StrToInt(sValor);
+        oJSON.AddPair(Self.Names[nIndex],TJSONNumber.Create(nValor));
+      end
+      else
+        oJSON.AddPair(Self.Names[nIndex], TJSONString.Create(sValor));
     end;
 
     Result := oJSON.ToString;
@@ -110,7 +105,7 @@ begin
   if self.HasDuplicate then
     raise Exception.Create('Valores duplicados!');
 
-  for nIndex := 0 to self.Count-1 do
+  for nIndex := 0 to Pred(Self.Count) do
   begin
     if (self.Names[nIndex] = EmptyStr) or
        (self.ValueFromIndex[nIndex] = EmptyStr) then
@@ -132,8 +127,8 @@ begin
     end;
 
     try
-      oLista.Add('valor duplicado');
-      oLista.Add('valor duplicado');
+      oLista.Add('duplicado');
+      oLista.Add('duplicado');
       oLista.ToJSON;
     except
       on E: Exception do

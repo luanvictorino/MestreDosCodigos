@@ -1,9 +1,11 @@
 object fMissao19: TfMissao19
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Miss'#227'o 19'
-  ClientHeight = 503
-  ClientWidth = 615
+  ClientHeight = 504
+  ClientWidth = 616
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +18,14 @@ object fMissao19: TfMissao19
   object mmXml: TMemo
     Left = 8
     Top = 40
-    Width = 599
+    Width = 593
     Height = 455
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 1
   end
   object btCarregarXml: TButton
-    Left = 235
+    Left = 232
     Top = 8
     Width = 145
     Height = 25

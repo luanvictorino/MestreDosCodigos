@@ -23,12 +23,12 @@ uses
   uNotepad in 'uNotepad.pas',
   uCriadorMagico in 'uCriadorMagico.pas';
 
-procedure main;
+procedure Main;
 begin
   TCriadorMagico.AbrirNotepad;
-  readln;
 end;
 
 begin
-  main;
+  ReportMemoryLeaksOnShutdown := True;
+  Main;
 end.

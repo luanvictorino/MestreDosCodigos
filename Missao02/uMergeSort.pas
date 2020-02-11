@@ -4,33 +4,18 @@ interface
 
   type
     TMergeSort = class
-      function RetornaListaInteiro(sListaNumeros: String): TArray<Integer>;
-      function MergeSort(aArrayPrincipal: TArray<Integer>;
-        nInicio: Integer; nFim: Integer): TArray<Integer>;
-      function ListaComDoisValores(aListaNumeros: TArray<Integer>): TArray<Integer>;
+      function RetornaListaNumerosInteiro(sListaNumeros: String): TArray<Integer>;
+      function MergeSort(const pLista: TArray<Integer>): TArray<Integer>;
     end;
 
 implementation
 
 uses
   System.SysUtils,
-  System.StrUtils;
+  System.StrUtils,
+  System.Math;
 
-function TMergeSort.ListaComDoisValores(aListaNumeros: TArray<Integer>): TArray<Integer>;
-var
-  nTroca: Integer;
-begin
-  if aListaNumeros[1] < aListaNumeros[0] then
-  begin
-    nTroca:= aListaNumeros[0];
-    aListaNumeros[0]:= aListaNumeros[1];
-    aListaNumeros[1]:= nTroca;
-  end;
-
-  Result := aListaNumeros;
-end;
-
-function TMergeSort.RetornaListaInteiro(sListaNumeros: String): TArray<Integer>;
+function TMergeSort.RetornaListaNumerosInteiro(sListaNumeros: String): TArray<Integer>;
 var
   aListaNumerosStr: TArray<String>;
   i: Integer;
@@ -42,85 +27,68 @@ begin
     result[i] := aListaNumerosStr[i].ToInteger;
 end;
 
-function TMergeSort.MergeSort(aArrayPrincipal: TArray<Integer>;
-  nInicio: Integer; nFim: Integer): TArray<Integer>;
+function TMergeSort.MergeSort(const pLista: TArray<Integer>): TArray<Integer>;
 var
-  nContadorEsquerda,nContadorDireita,nContadorPrincipal,nMeio,b, a: Integer;
-  aEsquerda,aDireita,aArrayClone: TArray<Integer>;
+  nMeio: Integer;
+  nIndice: Integer;
+  nEsquerda: Integer;
+  nDireita: Integer;
+  aListaEsquerda: TArray<Integer>;
+  aListaDireita: TArray<Integer>;
+  aListaOrdenada: TArray<Integer>;
 begin
-  nMeio := (nFim+nInicio) div 2;
+  if (Length(pLista) <= 1) then
+    Exit(pLista);
 
-  if length(aArrayPrincipal) = 2 then
+  nMeio := Ceil(Length(pLista)/2);
+
+  SetLength(aListaOrdenada,Length(pLista));
+  SetLength(aListaEsquerda,nMeio);
+  SetLength(aListaDireita,(Length(pLista)-nMeio));
+
+  for nIndice := ZeroValue to Pred(nMeio) do
+    aListaEsquerda[nIndice] := pLista[nIndice];
+
+  for nIndice := nMeio  to Pred(Length(pLista)) do
+    aListaDireita[(nIndice-nMeio)] := pLista[nIndice];
+
+  aListaEsquerda := MergeSort(aListaEsquerda);
+  aListaDireita := MergeSort(aListaDireita);
+
+  nIndice := ZeroValue;
+  nEsquerda := ZeroValue;
+  nDireita := ZeroValue;
+
+  while (Length(aListaEsquerda) <> nEsquerda) and (Length(aListaDireita) <> nDireita) do
   begin
-    aArrayClone := ListaComDoisValores(aArrayPrincipal);
-  end
-  else
-  begin
-    if length(aArrayPrincipal) = 1 then
+    if (aListaEsquerda[nEsquerda] <= aListaDireita[nDireita]) then
     begin
-      aArrayClone := aArrayPrincipal;
+      aListaOrdenada[nIndice] := aListaEsquerda[nEsquerda];
+      Inc(nEsquerda);
     end
     else
     begin
-      aEsquerda:= Copy(aArrayPrincipal,nInicio,nMeio);
-      aDireita := Copy(aArrayPrincipal,nMeio,nFim);
-      aEsquerda := MergeSort(aEsquerda,0,high(aEsquerda));
-      aDireita := MergeSort(aDireita,0,high(aDireita));
-      nContadorEsquerda := 0; nContadorDireita:= 0; a:= 0; b:= 0;
-      for nContadorPrincipal := 0 to length(aArrayPrincipal) do
-      begin
-        if aEsquerda[nContadorEsquerda] < aDireita[nContadorDireita] then
-        begin
-          aArrayPrincipal[nContadorPrincipal]:= aEsquerda[nContadorEsquerda];
-          nContadorEsquerda:= nContadorEsquerda + 1;
-        end
-        else
-        begin
-          aArrayPrincipal[nContadorPrincipal]:= aDireita[nContadorDireita];
-          nContadorDireita := nContadorDireita + 1;
-        end;
-
-        if (nContadorEsquerda > length(aEsquerda) - 1) then
-        begin
-          a:= 1;
-          b:= nContadorPrincipal;
-          break;
-        end;
-        if (nContadorDireita > length(aDireita) - 1) then
-        begin
-          a:= 2;
-          b:= nContadorPrincipal;
-          break;
-        end;
-      end;
-
-      if a <> 0 then
-      begin
-        if a = 1 then
-        begin
-          for nContadorPrincipal:= nContadorDireita to length(aDireita)-1 do
-          begin
-            b:= b + 1;
-            aArrayPrincipal[b]:= aDireita[nContadorPrincipal];
-          end
-        end
-        else
-        begin
-          if a = 2 then
-          begin
-            for nContadorPrincipal := nContadorEsquerda to length(aEsquerda)-1 do
-            begin
-              b:= b + 1;
-              aArrayPrincipal[b]:= aEsquerda[nContadorPrincipal];
-            end;
-          end;
-        end;
-        aArrayClone := aArrayPrincipal;
-      end;
+      aListaOrdenada[nIndice] := aListaDireita[nDireita];
+      Inc(nDireita);
     end;
+    Inc(nIndice);
   end;
 
-  result:= aArrayClone;
+  while (Length(aListaEsquerda) <> nEsquerda) do
+  begin
+    aListaOrdenada[nIndice] := aListaEsquerda[nEsquerda];
+    Inc(nEsquerda);
+    Inc(nIndice);
+  end;
+
+  while (Length(aListaDireita) <> nDireita) do
+  begin
+    aListaOrdenada[nIndice] := aListaDireita[nDireita];
+    Inc(nDireita);
+    Inc(nIndice);
+  end;
+
+  Result := aListaOrdenada;
 end;
 
 end.

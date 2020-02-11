@@ -96,11 +96,10 @@ begin
   for oContinente := Low(TContinente) to High(TContinente) do
     Imprimir(oContinente);
 
-  readln;
+  Readln;
 end;
 
 begin
   ReportMemoryLeaksOnShutdown := True;
   main;
-
 end.

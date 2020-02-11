@@ -22,18 +22,27 @@ uses
 
 procedure LerDoArquivo;
 var
-  arquivo: TArquivo;
+  oArquivo: TArquivo;
 begin
-  arquivo := TArquivo.Create;
-  arquivo.LerDoArquivo;
+  oArquivo := TArquivo.Create;
+  try
+    oArquivo.LerDoArquivo;
+  finally
+    oArquivo.Free;
+  end;
+
 end;
 
 procedure SalvarParaArquivo;
 var
-  arquivo: TArquivo;
+  oArquivo: TArquivo;
 begin
-  arquivo := TArquivo.Create;
-  arquivo.SalvarParaArquivo;
+  oArquivo := TArquivo.Create;
+  try
+    oArquivo.SalvarParaArquivo;
+  finally
+    oArquivo.Free;
+  end;
 end;
 
 procedure main;
@@ -44,5 +53,6 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   main;
 end.

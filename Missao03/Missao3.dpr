@@ -26,9 +26,11 @@ var
   sNome: String;
   sSalarioFixo: String;
   sTotalVendas: String;
+  nValorReceber: Real;
 begin
   oVendedor := TVendedor.Create;
-  repeat
+  try
+    repeat
     Write('Digite o nome do vendedor: ');
     Readln(sNome);
     oVendedor.Nome := sNome;
@@ -43,9 +45,18 @@ begin
 
     if not oVendedor.ValidarDados then
       Writeln('Dados inválidos, favor informe-os novamente!!');
-  until oVendedor.ValidarDados;
+    until oVendedor.ValidarDados;
 
-  oVendedor.MostrarValorReceber;
+    nValorReceber := oVendedor.CalcularValorReceber;
+    Writeln('===================');
+    Writeln('Vendedor: '+oVendedor.Nome);
+    Writeln('Salário Fixo: R$'+FormatFloat('#0.00',StrToFloat(oVendedor.SalarioFixo)));
+    Writeln('Valor a receber: R$'+FormatFloat('#0.00',nValorReceber));
+    Writeln('===================');
+  finally
+    oVendedor.Free;
+  end;
+
   Readln;
 end;
 

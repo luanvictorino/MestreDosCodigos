@@ -99,7 +99,7 @@ begin
       raise Exception.Create('Função não encontrada!!');
 
     nArea := oCalcularAreaQuadradoRetangulo(nBase, nAltura);
-    Writeln('A area do quadrado/retângulo eh: '+FormatFloat('#0.00',nArea));
+    Writeln('A área do quadrado/retângulo é: '+FormatFloat('#0.00',nArea));
   finally
     FreeLibrary(hDll);
   end;
@@ -157,6 +157,7 @@ begin
       Break;
 
     Writeln('Digito inválido!! Tente novamente.');
+    Writeln(EmptyStr);
   until False;
 
   case sOperacao.ToInteger of

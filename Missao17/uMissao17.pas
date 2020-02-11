@@ -64,8 +64,6 @@ implementation
 
 {$R *.dfm}
 
-{ TRepositories }
-
 procedure TfMissao17.btConsultarClick(Sender: TObject);
 begin
   CarregarDadosNoDataSet;
@@ -102,17 +100,20 @@ end;
 procedure TfMissao17.ConfigurarDataSet(var pClientDataSet: TClientDataSet);
 begin
   pClientDataSet := TClientDataSet.Create(Self);
-  pClientDataSet.Close;
-  pClientDataSet.FieldDefs.Clear;
-  pClientDataSet.FieldDefs.Add('Id', ftInteger);
-  pClientDataSet.FieldDefs.Add('Name', ftString,100, False);
-  pClientDataSet.FieldDefs.Add('Html_Url', ftString,100, False);
-  pClientDataSet.FieldDefs.Add('Description', ftString,100, False);
-  pClientDataSet.CreateDataSet;
-  pClientDataSet.FieldByName('Id').DisplayWidth := 15;
-  pClientDataSet.FieldByName('Name').DisplayWidth := 30;
-  pClientDataSet.FieldByName('Html_Url').DisplayWidth := 45;
-  pClientDataSet.FieldByName('Description').DisplayWidth := 30;
+  with pClientDataSet do
+  begin
+    Close;
+    FieldDefs.Clear;
+    FieldDefs.Add('Id', ftInteger);
+    FieldDefs.Add('Name', ftString,80, False);
+    FieldDefs.Add('Html_Url', ftString,100, False);
+    FieldDefs.Add('Description', ftString,120, False);
+    CreateDataSet;
+    FieldByName('Id').DisplayWidth := 15;
+    FieldByName('Name').DisplayWidth := 20;
+    FieldByName('Html_Url').DisplayWidth := 45;
+    FieldByName('Description').DisplayWidth := 40;
+  end;
 end;
 
 function TfMissao17.CarregarApi: String;
@@ -127,8 +128,6 @@ begin
   if Key = #13 then
     btConsultarClick(Sender);
 end;
-
-{ TRepositories }
 
 destructor TApi.Destroy;
 var
