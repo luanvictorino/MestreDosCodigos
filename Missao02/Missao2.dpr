@@ -43,7 +43,6 @@ begin
   finally
     oMergeSort.Free;
   end;
-
   Readln;
 end;
 
