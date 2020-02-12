@@ -31,27 +31,31 @@ begin
   oVendedor := TVendedor.Create;
   try
     repeat
-    Write('Digite o nome do vendedor: ');
+    Write('Informe o nome do vendedor: ');
     Readln(sNome);
     oVendedor.Nome := sNome;
 
-    Write('Digite o salário fixo: ');
+    Write('Informe o salário fixo: ');
     Readln(sSalarioFixo);
     oVendedor.SalarioFixo := sSalarioFixo;
 
-    Write('Digite o total de vendas: ');
+    Write('Informe o total de vendas: ');
     Readln(sTotalVendas);
     oVendedor.TotalVendas := sTotalVendas;
 
-    if not oVendedor.ValidarDados then
-      Writeln('Dados inválidos, favor informe-os novamente!!');
-    until oVendedor.ValidarDados;
+    Writeln(EmptyStr);
+    if oVendedor.ValidarDados then
+      Break;
+
+    Writeln('Dados inválidos, favor informe-os novamente!!');
+    Continue;
+    until False;
 
     nValorReceber := oVendedor.CalcularValorReceber;
     Writeln('===================');
     Writeln('Vendedor: '+oVendedor.Nome);
-    Writeln('Salário Fixo: R$'+FormatFloat('#0.00',StrToFloat(oVendedor.SalarioFixo)));
-    Writeln('Valor a receber: R$'+FormatFloat('#0.00',nValorReceber));
+    Writeln('Salário Fixo: R$'+FormatFloat('###,##0.00',StrToFloat(oVendedor.SalarioFixo)));
+    Writeln('Valor a receber: R$'+FormatFloat('###,##0.00',nValorReceber));
     Writeln('===================');
   finally
     oVendedor.Free;

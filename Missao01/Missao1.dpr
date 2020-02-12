@@ -16,7 +16,7 @@ uses
 
 function Fatorial(nValor: Int64): Int64;
 begin
-  if (nValor = 0) or (nValor = 1) then
+  if nValor in [0, 1] then
     Result := 1
   else
     Result := nValor * Fatorial(Pred(nValor));
@@ -27,13 +27,11 @@ var
   nValor: Int64;
 begin
   Result := False;
+
   if not TryStrToInt64(sValor, nValor) then
     Exit;
 
-  if not(nValor in [0..20]) then
-    Exit;
-
-  Result := True;
+  Result := nValor in [0..20];
 end;
 
 procedure main;
@@ -52,16 +50,16 @@ begin
     if not ValidarValor(sValor) then
     begin
       Writeln('Valor inválido!');
-      Writeln(EmptyStr);
+      Writeln(string.Empty);
       Continue;
     end;
 
     nValor := StrToInt64(sValor);
-    Writeln('O fatorial de ' + nValor.ToString +
-            ' é: ' + Fatorial(nValor).ToString);
+    Writeln('O fatorial de ' + nValor.ToString +' é: ' + Fatorial(nValor).ToString);
     Writeln(EmptyStr);
     Continue;
   until False;
+  Readln;
 end;
 
 begin

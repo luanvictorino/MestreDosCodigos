@@ -20,11 +20,12 @@ var
   aListaNumerosStr: TArray<String>;
   i: Integer;
 begin
-  aListaNumerosStr := SplitString(sListaNumeros, ',');
+  aListaNumerosStr := sListaNumeros.Split([','], TStringSplitOptions.ExcludeEmpty);
 
   SetLength(result, Length(aListaNumerosStr));
-  for i := 0 to Pred(Length(aListaNumerosStr)) do
+  for i := Low(aListaNumerosStr) to High(aListaNumerosStr) do
     result[i] := aListaNumerosStr[i].ToInteger;
+
 end;
 
 function TMergeSort.MergeSort(const pLista: TArray<Integer>): TArray<Integer>;

@@ -21,8 +21,8 @@ procedure main;
 var
   sListaNumeros: String;
   aListaNumeros: TArray<Integer>;
-  nContador: Integer;
   oMergeSort: TMergeSort;
+  nNumero: Integer;
 begin
   oMergeSort := TMergeSort.Create;
   try
@@ -32,17 +32,13 @@ begin
     aListaNumeros := oMergeSort.ConverterListaEmInteiro(sListaNumeros);
     aListaNumeros := oMergeSort.MergeSort(aListaNumeros);
 
-    Write('A lista ordenada é: ');
-    for nContador := 0 to Pred(Length(aListaNumeros)) do
-    begin
-      if not(nContador = Pred(Length(aListaNumeros))) then
-        Write(IntToStr(aListaNumeros[nContador]) + ', ')
-      else
-        Write(aListaNumeros[nContador]);
-    end;
+    Write('A lista ordenada é');
+    for nNumero in aListaNumeros do
+      Write(', '+nNumero.ToString);
   finally
     oMergeSort.Free;
   end;
+
   Readln;
 end;
 

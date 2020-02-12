@@ -39,28 +39,25 @@ begin
 end;
 
 procedure SepararNomes(var aLista: TArray<String>; nTamanhoLista: Integer);
+const
+  sEspaco = ' ';
 var
-  nIndice: Integer;
-  sEspaço: String;
+  nPosicao: Integer;
   sNome: String;
   sNomeConvertido: String;
   aListaConvertida: TArray<String>;
 begin
-  sEspaço := ' ';
-  nTamanhoLista := Length(aLista);
   SetLength(aListaConvertida, nTamanhoLista);
 
-  for nIndice := 0 to Pred(nTamanhoLista) do
-      aLista[nIndice] := (aLista[nIndice]).ToLower;
-
-  for nIndice := 0 to Pred(nTamanhoLista) do
+  for nPosicao := 0 to Pred(nTamanhoLista) do
   begin
-    for sNome in SplitString(aLista[nIndice], sEspaço) do
-    begin
-      sNomeConvertido := ConverterNomes(sNome);
-      aListaConvertida[nIndice] := aListaConvertida[nIndice] + sNomeConvertido + ' ';
-    end;
-    aLista[nIndice] := aListaConvertida[nIndice];
+      aLista[nPosicao] := aLista[nPosicao].ToLower;
+      for sNome in SplitString(aLista[nPosicao], sEspaco) do
+      begin
+        sNomeConvertido := ConverterNomes(sNome);
+        aListaConvertida[nPosicao] := aListaConvertida[nPosicao] + sNomeConvertido + ' ';
+      end;
+      aLista[nPosicao] := aListaConvertida[nPosicao];
   end;
 end;
 
@@ -69,7 +66,6 @@ var
   sNome: String;
   aListaNomes: TArray<String>;
   nTamanhoLista: Integer;
-  nIndice: Integer;
 begin
   nTamanhoLista := 0;
   repeat
@@ -84,11 +80,10 @@ begin
     aListaNomes[nTamanhoLista] := sNome;
   until False;
 
-  SepararNomes(aListaNomes, nTamanhoLista);
-
+  SepararNomes(aListaNomes, Succ(nTamanhoLista));
   Writeln('========== Lista ==========');
-  for nIndice := 0 to nTamanhoLista do
-    Writeln(aListaNomes[nIndice]);
+  for sNome in aListaNomes do
+    Writeln(sNome);
 
   Readln;
 end;

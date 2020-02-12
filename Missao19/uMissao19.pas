@@ -37,6 +37,7 @@ var
   oXmlResponseType: IXMLResponseType;
   oXmlItemType: IXMLItemType;
   nIndice: Integer;
+  Builder: TStringBuilder;
 begin
   mmXml.Lines.Clear;
   oXMLResponseType := uXmlMissao19.LoadResponse('../../xmlMissao19.xml');
@@ -45,25 +46,31 @@ begin
   begin
     oXMLItemType := oXMLResponseType.Result.Item[nIndice];
 
-    with mmXml.Lines do
-    begin
-      Add('ID: ' + oXMLItemType.Id.ToString);
-      Add('Nome: ' + oXMLItemType.First_name);
-      Add('Sobrenome: ' + oXMLItemType.Last_name);
-      Add('Gênero: ' + oXMLItemType.Gender);
-      Add('Data de Nascimento: ' + oXMLItemType.Dob);
-      Add('E-mail: ' + oXMLItemType.Email);
-      Add('Telefone: ' + oXMLItemType.Phone);
-      Add('Website: ' + oXMLItemType.Website);
-      Add('Endereço: ' + oXMLItemType.Address);
-      Add('Status: ' + oXMLItemType.Status);
-      Add('Link (HATEOAS):');
-      Add('|_ Recurso: ' + oXMLItemType._links.Self.Href);
-      Add('|_ Editar: ' + oXMLItemType._links.Edit.Href);
-      Add('|_ Avatar: ' + oXMLItemType._links.Avatar.Href);
-      Add('------------------------------------------------------------');
+    Builder := TStringBuilder.Create(mmXml.Text);
+    try
+      Builder.AppendLine('ID: ' + oXMLItemType.Id.ToString)
+             .AppendLine('Nome: ' + oXMLItemType.First_name)
+             .AppendLine('Sobrenome: ' + oXMLItemType.Last_name)
+             .AppendLine('Gênero: ' + oXMLItemType.Gender)
+             .AppendLine('Data de Nascimento: ' + oXMLItemType.Dob)
+             .AppendLine('E-mail: ' + oXMLItemType.Email)
+             .AppendLine('Telefone: ' + oXMLItemType.Phone)
+             .AppendLine('Website: ' + oXMLItemType.Website)
+             .AppendLine('Endereço: ' + oXMLItemType.Address)
+             .AppendLine('Status: ' + oXMLItemType.Status)
+             .AppendLine('Link (HATEOAS):')
+             .AppendLine('|_ Recurso: ' + oXMLItemType._links.Self.Href)
+             .AppendLine('|_ Editar: ' + oXMLItemType._links.Edit.Href)
+             .AppendLine('|_ Avatar: ' + oXMLItemType._links.Avatar.Href)
+             .AppendLine('------------------------------------------------------------');
+
+        mmXml.Text := Builder.toString;
+      finally
+      Builder.Free;
     end;
   end;
+
+
 end;
 
 end.

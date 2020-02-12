@@ -110,26 +110,30 @@ begin
 end;
 
 procedure TControlarXml.ControlarBotoes;
+var
+  nQtdRegistrosXml: Integer;
 begin
-  FBtnPrimeiro.Enabled := (FXMLResponseType.Result.Count > 0) and
-                          (FIndice <> 0);
+  nQtdRegistrosXml := FXMLResponseType.Result.Count;
 
-  FBtnAnterior.Enabled := FBtnPrimeiro.Enabled = True;;
+  FBtnPrimeiro.Enabled := (nQtdRegistrosXml > ZeroValue) and
+                          (FIndice <> ZeroValue);
 
-  FBtnProximo.Enabled := (FXMLResponseType.Result.Count > 0) and
-                         (FIndice <> Pred(FXMLResponseType.Result.Count));
+  FBtnAnterior.Enabled := FBtnPrimeiro.Enabled;
 
-  FBtnUltimo.Enabled := FBtnProximo.Enabled = True;
+  FBtnProximo.Enabled := (nQtdRegistrosXml > ZeroValue) and
+                         (FIndice <> Pred(nQtdRegistrosXml));
 
-  FBtnCarregarXml.Enabled := FXMLResponseType.Result.Count = 0;
+  FBtnUltimo.Enabled := FBtnProximo.Enabled;
 
-  FBtnAdicionar.Enabled := (FXMLResponseType.Result.Count > 0) and
-                           ((FControlarBotoes = 0) or (FControlarBotoes = 2));
+  FBtnCarregarXml.Enabled := nQtdRegistrosXml = ZeroValue;
 
-  FBtnSalvar.Enabled := (FXMLResponseType.Result.Count > 0);
+  FBtnAdicionar.Enabled := (nQtdRegistrosXml > ZeroValue) and
+                           ((FControlarBotoes = ZeroValue) or (FControlarBotoes = 2));
 
-  FBtnRemover.Enabled := (FXMLResponseType.Result.Count > 0) and
-                         (FBtnAdicionar.Enabled = True);
+  FBtnSalvar.Enabled := (nQtdRegistrosXml > ZeroValue);
+
+  FBtnRemover.Enabled := (nQtdRegistrosXml > ZeroValue) and
+                         (FBtnAdicionar.Enabled);
 end;
 
 procedure TControlarXml.Primeiro;
@@ -170,7 +174,7 @@ var
   nIndex: Integer;
   oXMLItemType: IXMLItemType;
 begin
-  if Trim(FId.Text) = EmptyStr then
+  if string(FId.Text).Trim.IsEmpty then
   begin
     FId.SetFocus;
     raise Exception.Create('Campo ''Id'' inválido!');
@@ -183,7 +187,7 @@ begin
     oXMLItemType := FXMLResponseType.Result.Item[nIndex];
     if nId = oXMLItemType.Id then
     begin
-      if (FBtnAdicionar.Enabled = True) then
+      if (FBtnAdicionar.Enabled) then
         FValorSendoAlterado := True
       else
         raise Exception.Create('Campo ''id'' duplicado!');
