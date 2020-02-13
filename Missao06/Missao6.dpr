@@ -19,7 +19,9 @@ program Missao6;
 
 uses
   System.SysUtils,
-  System.StrUtils, Winapi.Windows;
+  System.StrUtils,
+  Winapi.Windows,
+  System.Math;
 
   const
     sNomeBiblioteca = 'Missao6Dll.dll';
@@ -29,120 +31,107 @@ uses
     TCalcularAreaQuadradoRetangulo = function(nBase, nAltura: Real): Real; stdcall;
     TCalcularAreaCirculo = function(nRaio: Real): Real; stdcall;
 
-procedure MostrarAreaTriangulo;
+procedure MostrarAreaTriangulo(pHandleDll: THandle);
 var
-  hDll: THandle;
   oCalcularAreaTriangulo: TCalcularAreaTriangulo;
   nBase: Real;
   nAltura: Real;
   nArea: Real;
+  sValor: String;
 begin
   Writeln('-----Calcular área de um triângulo-----');
-  Writeln(EmptyStr);
   repeat
+    Writeln(EmptyStr);
     Write('Informe a base: ');
-    Readln(nBase);
-    Write('Informe a altura: ');
-    Readln(nAltura);
+    Readln(sValor);
+    nBase := StrToFloatDef(sValor, ZeroValue);
 
-    if not(nBase <= 0) or (nAltura <= 0) then
+    Write('Informe a altura: ');
+    Readln(sValor);
+    nAltura := StrToFloatDef(sValor, ZeroValue);
+
+    if ((nBase > ZeroValue) and (nAltura > ZeroValue)) then
       break;
 
-    Writeln('O número não pode ser menor ou igual a zero, informe um valor válido!');
+    Writeln(EmptyStr);
+    Writeln('Informe um valor válido');
   until False;
 
-  hDll := LoadLibrary(sNomeBiblioteca);
-  try
-    if hDll = 0 then
-      raise Exception.Create('Biblioteca não encontrada!!');
+  @oCalcularAreaTriangulo := GetProcAddress(pHandleDll, 'CalcularAreaTriangulo');
+  if not Assigned(oCalcularAreaTriangulo) then
+    raise Exception.Create('Função não encontrada!!');
 
-    @oCalcularAreaTriangulo := GetProcAddress(hDll, 'CalcularAreaTriangulo');
-    if not Assigned(oCalcularAreaTriangulo) then
-      raise Exception.Create('Função não encontrada!!');
-
-    nArea := oCalcularAreaTriangulo(nBase, nAltura);
-    Writeln('A area do Triângulo eh: '+ FormatFloat('#0.00',nArea));
-  finally
-    FreeLibrary(hDll);
-  end;
+  nArea := oCalcularAreaTriangulo(nBase, nAltura);
+  Writeln('A area do Triângulo eh: '+ FormatFloat('#0.00',nArea));
 end;
 
-procedure MostrarAreaQuadradoRetangulo;
+procedure MostrarAreaCirculo(pHandleDll: THandle);
 var
-  hDll: THandle;
+  oCalcularAreaCirculo: TCalcularAreaCirculo;
+  nRaio: Real;
+  nArea: Real;
+  sValor: String;
+begin
+  Writeln('-----Calcular área de um círculo-----');
+  repeat
+    Writeln(EmptyStr);
+    Write('Informe o raio do círculo: ');
+    Readln(sValor);
+    nRaio := StrToFloatDef(sValor, ZeroValue);
+
+    if (nRaio > ZeroValue) then
+      break;
+
+    Writeln(EmptyStr);
+    Writeln('Informe um valor válido');
+  until False;
+
+  @oCalcularAreaCirculo := GetProcAddress(pHandleDll, 'CalcularAreaCirculo');
+  if not Assigned(oCalcularAreaCirculo) then
+    raise Exception.Create('Função não encontrada!!');
+
+  nArea := oCalcularAreaCirculo(nRaio);
+  Writeln('A área do circulo eh: '+ FormatFloat('#0.00',nArea));
+end;
+
+procedure MostrarAreaQuadradoRetangulo(pHandleDll: THandle);
+var
   oCalcularAreaQuadradoRetangulo: TCalcularAreaQuadradoRetangulo;
   nBase: Real;
   nAltura: Real;
   nArea: Real;
+  sValor: String;
 begin
   Writeln('-----Calcular área de um quadrado/retângulo-----');
-  Writeln(EmptyStr);
   repeat
+    Writeln(EmptyStr);
     Write('Informe a base: ');
-    Readln(nBase);
+    Readln(sValor);
+    nBase := StrToFloatDef(sValor, ZeroValue);
+
     Write('Informe a altura: ');
-    Readln(nAltura);
+    Readln(sValor);
+    nAltura := StrToFloatDef(sValor, ZeroValue);
 
-    if not (nBase <= 0) or (nAltura <= 0) then
+    if((nBase > ZeroValue) and (nAltura > ZeroValue)) then
       break;
 
-    Writeln('O número não pode ser menor ou igual a zero, informe um valor válido!');
+    Writeln(EmptyStr);
+    Writeln('Informe um valor válido');
   until False;
 
-  hDll := LoadLibrary(sNomeBiblioteca);
-  try
-    if hDll = 0 then
-      raise Exception.Create('Biblioteca não encontrada!!');
+  @oCalcularAreaQuadradoRetangulo := GetProcAddress(pHandleDll, 'CalcularAreaQuadradoRetangulo');
+  if not Assigned(oCalcularAreaQuadradoRetangulo) then
+    raise Exception.Create('Função não encontrada!!');
 
-    @oCalcularAreaQuadradoRetangulo := GetProcAddress(hDll, 'CalcularAreaQuadradoRetangulo');
-    if not Assigned(oCalcularAreaQuadradoRetangulo) then
-      raise Exception.Create('Função não encontrada!!');
-
-    nArea := oCalcularAreaQuadradoRetangulo(nBase, nAltura);
-    Writeln('A área do quadrado/retângulo é: '+FormatFloat('#0.00',nArea));
-  finally
-    FreeLibrary(hDll);
-  end;
-end;
-
-procedure MostrarAreaCirculo;
-var
-  hDll: THandle;
-  oCalcularAreaCirculo: TCalcularAreaCirculo;
-  nRaio: Real;
-  nArea: Real;
-begin
-  Writeln('-----Calcular área de um círculo-----');
-  Writeln(EmptyStr);
-  repeat
-    Write('Informe o raio do círculo: ');
-    Readln(nRaio);
-
-    if not (nRaio <= 0) then
-      break;
-
-    Writeln('O raio não pode ser menor ou igual a zero, informe um valor válido');
-  until False;
-
-  hDll := LoadLibrary(sNomeBiblioteca);
-  try
-    if hDll = 0 then
-      raise Exception.Create('Biblioteca não encontrada!!');
-
-    @oCalcularAreaCirculo := GetProcAddress(hDll, 'CalcularAreaCirculo');
-    if not Assigned(oCalcularAreaCirculo) then
-      raise Exception.Create('Função não encontrada!!');
-
-    nArea := oCalcularAreaCirculo(nRaio);
-    Writeln('A área do circulo eh: '+ FormatFloat('#0.00',nArea));
-  finally
-    FreeLibrary(hDll);
-  end;
+  nArea := oCalcularAreaQuadradoRetangulo(nBase, nAltura);
+  Writeln('A área do quadrado/retângulo é: '+FormatFloat('#0.00',nArea));
 end;
 
 procedure main;
 var
   sOperacao: String;
+  hDll: THandle;
 begin
   repeat
     Writeln('Área de um triângulo          [1]');
@@ -160,12 +149,20 @@ begin
     Writeln(EmptyStr);
   until False;
 
-  case sOperacao.ToInteger of
-    1: MostrarAreaTriangulo;
-    2: MostrarAreaCirculo;
-    3: MostrarAreaQuadradoRetangulo;
+  hDll := LoadLibrary(sNomeBiblioteca);
+  try
+    if hDll = 0 then
+      raise Exception.Create('Biblioteca não encontrada!!');
+
+    case sOperacao.ToInteger of
+      1: MostrarAreaTriangulo(hDll);
+      2: MostrarAreaCirculo(hDll);
+      3: MostrarAreaQuadradoRetangulo(hDll);
+    end;
+  finally
+    FreeLibrary(hDll);
   end;
-  readln;
+  Readln;
 end;
 
 begin
