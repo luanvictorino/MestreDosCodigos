@@ -83,7 +83,14 @@ object fMissao17: TfMissao17
     Top = 8
   end
   object dsMissao17: TDataSource
+    DataSet = cdsMissao17
     Left = 521
+    Top = 72
+  end
+  object cdsMissao17: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 616
     Top = 72
   end
 end

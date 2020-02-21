@@ -20,71 +20,79 @@ uses
   System.SysUtils,
   System.StrUtils;
 
-function ValidarPreposicao(sNome: String): boolean;
+function ValidarPreposicao(const sNome: String): boolean;
 begin
   Result := False;
-  if MatchStr(sNome,['a','e','o','da','de','do','das','dos']) then
+  if MatchStr(sNome.ToLower,['a','e','o','da','de','do','das','dos']) then
     Result := True;
 end;
 
-function ConverterNomes(sNome: String): String;
-begin
-  if not ValidarPreposicao(sNome) then
-  begin
-    Result := string(copy(sNome[1],1)).ToUpper + string(copy(sNome,2)).ToLower;
-    Exit;
-  end;
-
-  Result := sNome;
-end;
-
-procedure SepararNomes(var aLista: TArray<String>; nTamanhoLista: Integer);
+function ConverterNomes(const sNomeCompleto: String): String;
 const
-  sEspaco = ' ';
+  sESPACO = ' ';
 var
-  nPosicao: Integer;
   sNome: String;
   sNomeConvertido: String;
+begin
+  for sNome in SplitString(sNomeCompleto, sESPACO) do
+  begin
+    if not ValidarPreposicao(sNome) then
+    begin
+      sNomeConvertido := sNomeConvertido + sESPACO + string(sNome[1]).ToUpper +
+                           string(copy(sNome,2)).ToLower;
+      Continue;
+    end;
+    sNomeConvertido := sNomeConvertido + sESPACO + sNome.ToLower;
+  end;
+
+  Result := sNomeConvertido;
+end;
+
+function ConverterNomesParaCaixaMista(const aLista: TArray<String>;
+  const nTamanhoLista: Integer): TArray<String>;
+var
+  nPosicao: Integer;
   aListaConvertida: TArray<String>;
 begin
   SetLength(aListaConvertida, nTamanhoLista);
-
   for nPosicao := 0 to Pred(nTamanhoLista) do
-  begin
-      aLista[nPosicao] := aLista[nPosicao].ToLower;
-      for sNome in SplitString(aLista[nPosicao], sEspaco) do
-      begin
-        sNomeConvertido := ConverterNomes(sNome);
-        aListaConvertida[nPosicao] := aListaConvertida[nPosicao] + sNomeConvertido + ' ';
-      end;
-      aLista[nPosicao] := aListaConvertida[nPosicao];
-  end;
+    aListaConvertida[nPosicao] := ConverterNomes(aLista[nPosicao]);
+
+  Result := aListaConvertida;
+end;
+
+function AdicionarNomeNaLista(const sNome: String): TArray<String>;
+var
+  nTamanhoLista: Integer;
+begin
+  SetLength(Result, Succ(Length(Result)));
+  nTamanhoLista := Pred(Length(Result));
+  Result[nTamanhoLista] := sNome;
 end;
 
 procedure main;
 var
   sNome: String;
   aListaNomes: TArray<String>;
-  nTamanhoLista: Integer;
+  bConverter: Boolean;
 begin
-  nTamanhoLista := 0;
+  Writeln('Digite uma lista de nomes em seguida digite ''converter'' e tecle ' +
+          '''enter'' para converter os nomes para caixa-mista. ');
   repeat
-    Write('Digite uma lista de nomes ou digite ''sair''para sair: ');
-    readln(sNome);
+    Write('Informe um nome: ');
+    Readln(sNome);
 
-    if sNome.ToLower = 'sair' then
-      Break;
+    bConverter := sNome.ToLower = 'converter';
+    if not bConverter then
+      aListaNomes := AdicionarNomeNaLista(sNome);
+  until bConverter;
 
-    SetLength(aListaNomes, Succ(Length(aListaNomes)));
-    nTamanhoLista := Pred(Length(aListaNomes));
-    aListaNomes[nTamanhoLista] := sNome;
-  until False;
-
-  SepararNomes(aListaNomes, Succ(nTamanhoLista));
+  aListaNomes := ConverterNomesParaCaixaMista(aListaNomes, Length(aListaNomes));
   Writeln('========== Lista ==========');
   for sNome in aListaNomes do
     Writeln(sNome);
 
+  Writeln('===========================');
   Readln;
 end;
 

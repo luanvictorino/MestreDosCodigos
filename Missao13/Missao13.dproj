@@ -76,7 +76,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="uInterface.pas"/>
         <DCCReference Include="uArquivo.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

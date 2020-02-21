@@ -24,14 +24,17 @@ program Missao12;
 uses
   System.SysUtils,
   System.Classes,
+  System.Math,
   System.Json;
 
 type
   TStringListHelper = class helper for TStringList
+  private
+    function ValidarFormatoChaveEValor: boolean;
+    function RetornaJsonValido(const sValor: string): TJSONValue;
   public
     function IsEmpty: Boolean;
     function HasDuplicate: Boolean;
-    procedure ValidJSON;
     function ToJSON: String;
   end;
 
@@ -45,72 +48,70 @@ end;
 function TStringListHelper.HasDuplicate: Boolean;
 var
   sLista: TStringList;
-  sItem: string;
 begin
   sLista := TStringList.Create;
   try
     sLista.Sorted := True;
     sLista.Duplicates := dupIgnore;
-
-    for sItem in Self do
-      sLista.Add(sItem);
-
+    sLista.AddStrings(Self);
     Result := sLista.Count <> Self.Count;
   finally
-    sLista.Free;
+    FreeAndNil(sLista);
   end;
 end;
 
 function TStringListHelper.ToJSON: String;
 var
-  sValor: String;
   oJSON: TJSONObject;
   nIndex: Integer;
-  nValor: Integer;
 begin
-  self.ValidJSON;
-  oJSON := TJSONObject.Create;
-  try
-    for nIndex := 0 to Pred(self.Count) do
-    begin
-      sValor := self.ValueFromIndex[nIndex];
-      if (sValor.ToLower.Trim = 'null') then
-        oJSON.AddPair(Self.Names[nIndex],TJSONNull.Create)
-      else if (sValor.ToLower.Trim = 'true') then
-        oJSON.AddPair(Self.Names[nIndex],TJSONTrue.Create)
-      else if (sValor.ToLower.Trim = 'false') then
-        oJSON.AddPair(Self.Names[nIndex],TJSONFalse.Create)
-      else if TryStrToInt(sValor, nValor) then
+  Result := 'Formato inválido para converter em JSON!';
+  if ValidarFormatoChaveEValor then
+  begin
+    oJSON := TJSONObject.Create;
+    try
+      for nIndex := 0 to Pred(Self.Count) do
       begin
-        nValor := StrToInt(sValor);
-        oJSON.AddPair(Self.Names[nIndex],TJSONNumber.Create(nValor));
-      end
-      else
-        oJSON.AddPair(Self.Names[nIndex], TJSONString.Create(sValor));
+        oJSON.AddPair(Self.Names[nIndex], RetornaJSONValido(Self.ValueFromIndex[nIndex]));
+      end;
+      Result := oJSON.ToString;
+    finally
+      FreeAndNil(oJSON);
     end;
-
-    Result := oJSON.ToString;
-  finally
-    oJSON.Free
   end;
 end;
 
-procedure TStringListHelper.ValidJSON;
+function TStringListHelper.ValidarFormatoChaveEValor: Boolean;
 var
-  nIndex: Integer;
+  nPosicao: Integer;
 begin
-  if self.IsEmpty then
-    raise Exception.Create('Lista vazia!');;
-
-  if self.HasDuplicate then
-    raise Exception.Create('Valores duplicados!');
-
-  for nIndex := 0 to Pred(Self.Count) do
+  Result := True;
+  for nPosicao := 0 to Pred(Self.Count) do
   begin
-    if (self.Names[nIndex] = EmptyStr) or
-       (self.ValueFromIndex[nIndex] = EmptyStr) then
-      raise Exception.Create('Não foi possível converter o conteúdo!');
+    if (Self.ValueFromIndex[nPosicao] = EmptyStr) then
+    begin
+      Result := False;
+      Break;
+    end;
   end;
+end;
+
+function TStringListHelper.RetornaJsonValido(const sValor: string): TJSONValue;
+var
+  oValorJson: TJSONValue;
+begin
+  if (sValor.ToLower.Trim = EmptyStr) then
+    oValorJson := TJSONNull.Create
+  else if (sValor.ToLower.Trim = 'true') then
+    oValorJson := TJSONTrue.Create
+  else if (sValor.ToLower.Trim = 'false') then
+    oValorJson := TJSONFalse.Create
+  else if StrToFloatDef(sValor, NegativeValue) > NegativeValue then
+    oValorJson := TJSONNumber.Create(StrToFloat(sValor))
+  else
+    oValorJson := TJSONString.Create(sValor);
+
+  Result := oValorJson;
 end;
 
 procedure main;
@@ -119,43 +120,27 @@ var
 begin
   oLista := TStringList.Create;
   try
-    try
-      oLista.ToJSON;
-    except
-      on E: Exception do
-        Writeln(e.Message);
-    end;
+    if oLista.IsEmpty then
+      Writeln('Lista Vazia!');
 
-    try
-      oLista.Add('duplicado');
-      oLista.Add('duplicado');
-      oLista.ToJSON;
-    except
-      on E: Exception do
-        Writeln(e.Message);
-    end;
+    oLista.Add('Inválido= ');
+    Writeln(oLista.ToJSON);
 
-    try
-      oLista.Clear;
-      oLista.Add('item inválido');
-      oLista.ToJSON;
-    except
-      on E: Exception do
-        Writeln(e.Message);
-    end;
+    if oLista.HasDuplicate then
+      Writeln('Valores duplicados!');
 
     oLista.Clear;
-    oLista.Values['Código'] := 1.ToString;
-    oLista.Values['Nome'] := 'Luan';
-    oLista.Values['Ativo'] := 'True';
-    oLista.Values['Cidade'] := 'null';
+    oLista.Add('Cidade = Japura');
+    oLista.Add('Codigo = 1');
+    oLista.Add('Nome = Luan');
+    oLista.Add('Ativo = True');
+    oLista.Add('Contato = ');
 
     Writeln(oLista.ToJSON);
+    Readln;
   finally
     oLista.Free;
   end;
-
-  Readln;
 end;
 
 begin

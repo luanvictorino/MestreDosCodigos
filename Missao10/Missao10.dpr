@@ -25,36 +25,45 @@ program Missao10;
 uses
   System.SysUtils,
   System.StrUtils,
+  System.Math,
   uClasseMatematica in 'uClasseMatematica.pas';
+
+function LerValor(const pDescricao: String): Double;
+var
+  sValor: String;
+  nValor: Double;
+begin
+  repeat
+    Write(pDescricao + ': ');
+    Readln(sValor);
+    nValor := StrToFloatDef(sValor, ZeroValue);
+  until nValor <> ZeroValue;
+  Result := nValor
+end;
+
+function OperacaoValida(const pOperacao: String): Boolean;
+begin
+  Result := (MatchStr(pOperacao[1], ['+','-','*','/'])) and (Length(pOperacao) = 1);
+  if not Result then
+    Writeln('Operação inválida! Digite novamente.');
+
+  Writeln(EmptyStr);
+end;
 
 procedure main;
 var
   oClasseMatematica: TClasseMatematica;
   sOperacao: string;
-  nEsquerda: double;
-  nDireita: double;
 begin
   repeat
     Write('Informe um dos seguintes tipos de operações [+][-][*][/]: ');
-    readln(sOperacao);
-
-    if (MatchStr(sOperacao[1],['+','-','*','/'])) and (Length(sOperacao)=1) then
-      break;
-
-    Writeln('Operação inválida! Digite novamente.');
-    continue;
-  until False;
-
-  Write('Informe o primeiro valor: ');
-  readln(nEsquerda);
-
-  Write('Informe o segundo valor: ');
-  readln(nDireita);
+    Readln(sOperacao);
+  until OperacaoValida(sOperacao);
 
   oClasseMatematica := TClasseMatematica.Create;
   try
-    oClasseMatematica.Esquerda := nEsquerda;
-    oClasseMatematica.Direita := nDireita;
+    oClasseMatematica.Esquerda := LerValor('Esquerda');
+    oClasseMatematica.Direita := LerValor('Direita');
 
     case sOperacao[1] of
       '+': oClasseMatematica.OperacaoMatematica :=
@@ -81,10 +90,10 @@ begin
     Writeln(EmptyStr);
     Writeln('O resultado da operação matemática é: '+
             oClasseMatematica.OperacaoMatematica.ToString);
+    Readln;
   finally
     oClasseMatematica.Free;
   end;
-  readln;
 end;
 
 begin

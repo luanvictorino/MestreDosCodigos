@@ -7,8 +7,8 @@ program Missao18;
 uses
   System.SysUtils, System.Json, REST.Json;
 
-function AdicionarTerritorio(const pTerritory: TJSONValue; pLevel: TJSONValue;
-  pExperience: TJSONValue; pDateLastMission: TJSONValue): TJSONObject;
+function AdicionarTerritorio(const pTerritory, pLevel, pExperience,
+  pDateLastMission: TJSONValue): TJSONObject;
 var
   LJson: TJSONObject;
 begin
@@ -60,10 +60,10 @@ begin
 
     LJsonObject.AddPair(TJSONPair.Create('territories', LArray));
     Writeln(LJsonObject.Format);
+    Readln;
   finally
     LJsonObject.Free;
   end;
-  Readln;
 end;
 
 begin

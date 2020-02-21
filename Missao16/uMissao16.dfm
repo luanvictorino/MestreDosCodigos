@@ -13,7 +13,7 @@ object fMissao16: TfMissao16
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnShow = FormShow
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object lbPropriedades: TLabel

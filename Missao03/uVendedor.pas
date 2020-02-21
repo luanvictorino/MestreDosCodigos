@@ -7,16 +7,16 @@ type
   TVendedor = class
   private
     FNome: String;
-    FSalarioFixo: String;
-    FTotalVendas: String;
-    procedure SetSalarioFixo(Value: String);
-    procedure SetTotalVendas(Value: String);
+    FSalarioFixo: Real;
+    FTotalVendas: real;
+    procedure SetSalarioFixo(Value: Real);
+    procedure SetTotalVendas(Value: Real);
   public
     function ValidarDados: boolean;
     function CalcularValorReceber: Real;
     property Nome: String read FNome write FNome;
-    property SalarioFixo: String read FSalarioFixo write SetSalarioFixo;
-    property TotalVendas: String read FTotalVendas write SetTotalVendas;
+    property SalarioFixo: Real read FSalarioFixo write SetSalarioFixo;
+    property TotalVendas: Real read FTotalVendas write SetTotalVendas;
   end;
 
 implementation
@@ -27,30 +27,16 @@ uses
 { TVendedor }
 
 function TVendedor.ValidarDados: boolean;
-var
-  nNumero: Extended;
 begin
   Result := False;
 
   if Nome.IsEmpty then
     Exit;
 
-  if SalarioFixo.IsEmpty then
+  if SalarioFixo <= 0 then
     Exit;
 
-  if TotalVendas.IsEmpty then
-    Exit;
-
-  if not(TryStrToFloat(SalarioFixo, nNumero)) then
-    Exit;
-
-  if nNumero < 0 then
-    Exit;
-
-  if not(TryStrToFloat(TotalVendas, nNumero)) then
-    Exit;
-
-  if nNumero < 0 then
+  if TotalVendas <= 0 then
     Exit;
 
   Result := True;
@@ -58,22 +44,22 @@ end;
 
 function TVendedor.CalcularValorReceber: Real;
 const
-  nAcrescimo = 0.15;
+  nACRESCIMO = 0.15;
 var
   nTotalAcrescimo: Real;
 begin
-  nTotalAcrescimo := StrToFloat(TotalVendas)*nAcrescimo;
-  Result := StrToFloat(SalarioFixo) + nTotalAcrescimo;
+  nTotalAcrescimo := TotalVendas*nAcrescimo;
+  Result := SalarioFixo + nTotalAcrescimo;
 end;
 
-procedure TVendedor.SetSalarioFixo(Value: String);
+procedure TVendedor.SetSalarioFixo(Value: Real);
 begin
-  FSalarioFixo := StringReplace(Value, '.', ',', []);
+  FSalarioFixo := Value;
 end;
 
-procedure TVendedor.SetTotalVendas(Value: String);
+procedure TVendedor.SetTotalVendas(Value: Real);
 begin
-  FTotalVendas := StringReplace(Value, '.', ',', []);
+  FTotalVendas := Value;
 end;
 
 end.

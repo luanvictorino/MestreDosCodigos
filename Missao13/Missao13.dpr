@@ -17,39 +17,25 @@ program Missao13;
 
 uses
   System.SysUtils,
-  uInterface in 'uInterface.pas',
   uArquivo in 'uArquivo.pas';
 
-procedure LerDoArquivo;
-var
-  oArquivo: TArquivo;
-begin
-  oArquivo := TArquivo.Create;
-  try
-    oArquivo.LerDoArquivo;
-  finally
-    oArquivo.Free;
-  end;
-
-end;
-
-procedure SalvarParaArquivo;
-var
-  oArquivo: TArquivo;
-begin
-  oArquivo := TArquivo.Create;
-  try
-    oArquivo.SalvarParaArquivo;
-  finally
-    oArquivo.Free;
-  end;
-end;
-
 procedure main;
+var
+  oArquivo: TArquivo;
 begin
-  SalvarParaArquivo;
-  LerDoArquivo;
-  readln;
+  oArquivo := TArquivo.Create;
+  try
+    Writeln('Alimentando dados no arquivo.');
+    oArquivo.SalvarParaArquivo;
+    Writeln('Arquivo salvo!');
+
+    Writeln('Carregando arquivo: ');
+    Writeln(EmptyStr);
+    oArquivo.LerDoArquivo;
+    Readln;
+  finally
+    FreeAndNil(oArquivo);
+  end;
 end;
 
 begin

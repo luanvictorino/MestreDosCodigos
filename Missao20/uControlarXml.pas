@@ -3,15 +3,17 @@ unit uControlarXml;
 interface
 
 uses
-  xmlMissao20, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Buttons;
+  xmlMissao20, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Buttons, Xml.XMLIntf;
 
 type
   TControlarXml = class
   private
     FXMLResponseType: IXMLResponseType;
+    FXMLItemType: IXMLItemType;
+    FXMLDocument: IXMLDocument;
     FValorSendoAlterado: Boolean;
-    FControlarBotoes: Integer;
     FIndice: Integer;
+    FAdicionandoRegistro: Boolean;
     FId: TEdit;
     FNome: TEdit;
     FSobrenome: TEdit;
@@ -58,7 +60,7 @@ type
 implementation
 
 uses
-  System.Math, System.SysUtils, Xml.XMLIntf, Xml.XMLDoc, Vcl.Dialogs, Vcl.Graphics;
+  System.Math, System.SysUtils, Vcl.Dialogs, Vcl.Graphics, Xml.XMLDoc;
 
 { TControlarXml }
 
@@ -87,26 +89,24 @@ begin
   FBtnAdicionar := pBtnAdicionar;
   FBtnSalvar := pBtnSalvar;
   FBtnRemover := pBtnRemover;
+  FXMLDocument := TXMLDocument.Create(nil);
 end;
 
 procedure TControlarXml.CarregarCampos;
-var
-  oXMLItemType: IXMLItemType;
 begin
-  oXMLItemType := FXMLResponseType.Result.Item[FIndice];
+  FXMLItemType := FXMLResponseType.Result.Item[FIndice];
 
-  FId.Text := oXMLItemType.Id.ToString;
-  FNome.Text := oXMLItemType.First_name;
-  FSobrenome.Text := oXMLItemType.Last_name;
-  FGenero.ItemIndex := GeneroStrToInteger(oXMLItemType.Gender);
-  FDataNascimento.Date := StrToDateDef(oXMLItemType.Dob, ZeroValue);
-  FEmail.Text := oXMLItemType.Email;
-  FTelefone.Text := oXMLItemType.Phone;
-  FWebsite.Text := oXMLItemType.Website;
-  FEndereco.Text := oXMLItemType.Address;
-  FStatus.ItemIndex := StatusStrToInteger(oXMLItemType.Status);
-
-  ControlarBotoes;
+  FId.Text := FXMLItemType.Id.ToString;
+  FNome.Text := FXMLItemType.First_name;
+  FSobrenome.Text := FXMLItemType.Last_name;
+  FGenero.ItemIndex := GeneroStrToInteger(FXMLItemType.Gender);
+  FDataNascimento.Date := StrToDateDef(FXMLItemType.Dob, ZeroValue);
+  FEmail.Text := FXMLItemType.Email;
+  FTelefone.Text := FXMLItemType.Phone;
+  FWebsite.Text := FXMLItemType.Website;
+  FEndereco.Text := FXMLItemType.Address;
+  FStatus.ItemIndex := StatusStrToInteger(FXMLItemType.Status);
+  FXMLDocument.LoadFromXML(FXMLResponseType.XML);
 end;
 
 procedure TControlarXml.ControlarBotoes;
@@ -128,7 +128,7 @@ begin
   FBtnCarregarXml.Enabled := nQtdRegistrosXml = ZeroValue;
 
   FBtnAdicionar.Enabled := (nQtdRegistrosXml > ZeroValue) and
-                           ((FControlarBotoes = ZeroValue) or (FControlarBotoes = 2));
+                            not(FAdicionandoRegistro);
 
   FBtnSalvar.Enabled := (nQtdRegistrosXml > ZeroValue);
 
@@ -139,40 +139,41 @@ end;
 procedure TControlarXml.Primeiro;
 begin
   FIndice := ZeroValue;
-  FControlarBotoes := 0;
   CarregarCampos;
+  ControlarBotoes;
 end;
 
 procedure TControlarXml.Anterior;
 begin
   FIndice := Pred(FIndice);
-
-  if FControlarBotoes = 1 then
+  if FAdicionandoRegistro then
+  begin
     FIndice := Pred(FXMLResponseType.Result.Count);
+    FAdicionandoRegistro := False;
+  end;
 
-  FControlarBotoes := 0;
   CarregarCampos;
+  ControlarBotoes;
 end;
 
 procedure TControlarXml.Proximo;
 begin
   FIndice := Succ(FIndice);
-  FControlarBotoes := 0;
   CarregarCampos;
+  ControlarBotoes;
 end;
 
 procedure TControlarXml.Ultimo;
 begin
   FIndice := Pred(FXMLResponseType.Result.Count);
-  FControlarBotoes := 0;
   CarregarCampos;
+  ControlarBotoes;
 end;
 
 procedure TControlarXml.ValidarDados;
 var
   nId: Integer;
   nIndex: Integer;
-  oXMLItemType: IXMLItemType;
 begin
   if string(FId.Text).Trim.IsEmpty then
   begin
@@ -184,8 +185,8 @@ begin
   nId := StrToIntDef(FId.Text, 0);
   for nIndex := 0 to Pred(FXMLResponseType.Result.Count) do
   begin
-    oXMLItemType := FXMLResponseType.Result.Item[nIndex];
-    if nId = oXMLItemType.Id then
+    FXMLItemType := FXMLResponseType.Result.Item[nIndex];
+    if nId = FXMLItemType.Id then
     begin
       if (FBtnAdicionar.Enabled) then
         FValorSendoAlterado := True
@@ -222,14 +223,12 @@ begin
 end;
 
 procedure TControlarXml.CarregarXml;
-var
-  oXmlItemType: IXMLItemType;
 begin
   FXMLResponseType := xmlMissao20.LoadResponse('../../xmlMissao20.xml');
-  oXMLItemType := FXMLResponseType.Result.Item[ZeroValue];
+  FXMLItemType := FXMLResponseType.Result.Item[ZeroValue];
   HabilitarCampos;
   CarregarCampos;
-  FControlarBotoes := 0;
+  ControlarBotoes;
 end;
 
 procedure TControlarXml.HabilitarCampos;
@@ -252,7 +251,7 @@ begin
   FId.Text := NovoId;
   FNome.SetFocus;
   FIndice := Pred(FXMLResponseType.Result.Count);
-  FControlarBotoes := 1;
+  FAdicionandoRegistro := True;
   ControlarBotoes;
 end;
 
@@ -260,54 +259,47 @@ function TControlarXml.NovoId: String;
 var
   nUltimoItem: Integer;
   nNovoId: Integer;
-  oXmlItemType: IXMLITemType;
 begin
   nUltimoItem := Pred(FXMLResponseType.Result.Count);
-  oXmlItemType := FXMLResponseType.Result.Item[nUltimoItem];
-  nNovoId := Succ(oXmlItemType.Id);
+  FXmlItemType := FXMLResponseType.Result.Item[nUltimoItem];
+  nNovoId := Succ(FXmlItemType.Id);
   Result := IntToStr(nNovoId);
 end;
 
 procedure TControlarXml.Salvar;
-var
-  oXMLItemType: IXMLItemType;
 begin
   ValidarDados;
 
   if FValorSendoAlterado then
   begin
-    oXMLItemType := FXMLResponseType.Result.Item[FIndice]
+    FXMLItemType := FXMLResponseType.Result.Item[FIndice]
   end
   else
   begin
-    oXMLItemType := FXMLResponseType.Result.Add;
+    FXMLItemType := FXMLResponseType.Result.Add;
     FIndice := Succ(FIndice);
   end;
 
-  oXMLITemType.Id := StrToInt(FId.Text);
-  oXMLItemType.First_name := FNome.Text;
-  oXMLItemType.Last_name := FSobrenome.Text;
-  oXMLItemType.Gender := FGenero.Text;
-  oXMLItemType.Dob := FormatDateTime('aaaa-mm-dd',FDataNascimento.Date);
-  oXMLItemType.Email := FEmail.Text;
-  oXMLItemType.Phone := FTelefone.Text;
-  oXMLItemType.Website := FWebsite.Text;
-  oXMLItemType.Address := FEndereco.Text;
-  oXMLItemType.Status := FStatus.Text;
+  FXMLITemType.Id := StrToInt(FId.Text);
+  FXMLItemType.First_name := FNome.Text;
+  FXMLItemType.Last_name := FSobrenome.Text;
+  FXMLItemType.Gender := FGenero.Text;
+  FXMLItemType.Dob := FormatDateTime('dd/mm/yyyy',FDataNascimento.Date);
+  FXMLItemType.Email := FEmail.Text;
+  FXMLItemType.Phone := FTelefone.Text;
+  FXMLItemType.Website := FWebsite.Text;
+  FXMLItemType.Address := FEndereco.Text;
+  FXMLItemType.Status := FStatus.Text;
 
   SalvarArquivoXml;
   ShowMessage('Registro Salvo!');
-  FControlarBotoes := 2;
+  FAdicionandoRegistro := False;
   ControlarBotoes;
 end;
 
 procedure TControlarXml.SalvarArquivoXml;
-var
-  oXMLDocument: IXMLDocument;
 begin
-  oXMLDocument := TXMLDocument.Create(nil);
-  oXMLDocument.LoadFromXML(FXMLResponseType.XML);
-  oXMLDocument.SaveToFile('../../xmlMissao20.xml');
+  FXMLDocument.SaveToFile('../../xmlMissao20.xml');
 end;
 
 procedure TControlarXml.Remover;
@@ -321,6 +313,8 @@ begin
     FIndice := 0;
 
   CarregarCampos;
+  ControlarBotoes;
+  SalvarArquivoXml;
 end;
 
 procedure TControlarXml.LimparCampos;

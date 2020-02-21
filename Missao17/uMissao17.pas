@@ -46,6 +46,7 @@ type
     RESTResponse: TRESTResponse;
     DBGrid1: TDBGrid;
     dsMissao17: TDataSource;
+    cdsMissao17: TClientDataSet;
     procedure edtValorKeyPress(Sender: TObject; var Key: Char);
     procedure btConsultarClick(Sender: TObject);
   private
@@ -73,24 +74,21 @@ var
   oApi: TApi;
   oCamposApi: TCamposApi;
   sDadosApi: string;
-  oClientDataSet: TClientDataSet;
 begin
   sDadosApi := CarregarApi;
 
-  ConfigurarDataSet(oClientDataSet);
+  ConfigurarDataSet(cdsMissao17);
   oApi := TJson.JsonToObject<TApi>(sDadosApi);
   try
     for oCamposApi in oApi.Api do
     begin
-      oClientDataSet.Insert;
-      oClientDataSet.FieldByName('Id').AsInteger := oCamposApi.Id;
-      oClientDataSet.FieldByName('Name').AsString := oCamposApi.Name;
-      oClientDataSet.FieldByName('Html_Url').AsString := oCamposApi.Url;
-      oClientDataSet.FieldByName('Description').AsString := oCamposApi.Description;
-      oClientDataSet.Post;
+      cdsMissao17.Insert;
+      cdsMissao17.FieldByName('Id').AsInteger := oCamposApi.Id;
+      cdsMissao17.FieldByName('Name').AsString := oCamposApi.Name;
+      cdsMissao17.FieldByName('Html_Url').AsString := oCamposApi.Url;
+      cdsMissao17.FieldByName('Description').AsString := oCamposApi.Description;
+      cdsMissao17.Post;
     end;
-
-    dsMissao17.DataSet := oClientDataSet;
   finally
     oApi.Free;
   end;
@@ -98,12 +96,11 @@ end;
 
 procedure TfMissao17.ConfigurarDataSet(var pClientDataSet: TClientDataSet);
 begin
-  pClientDataSet := TClientDataSet.Create(Self);
   with pClientDataSet do
   begin
     Close;
     FieldDefs.Clear;
-    FieldDefs.Add('id', ftInteger);
+    FieldDefs.Add('Id', ftInteger);
     FieldDefs.Add('Name', ftString,80, False);
     FieldDefs.Add('Html_Url', ftString,100, False);
     FieldDefs.Add('Description', ftString,120, False);
@@ -117,9 +114,13 @@ end;
 
 function TfMissao17.CarregarApi: String;
 begin
-  RESTRequest.Params.AddUrlSegment('busca', edtValor.Text);
-  RESTRequest.Execute;
-  Result := RESTResponse.JSONText;
+  try
+    RESTRequest.Params.AddUrlSegment('busca', edtValor.Text);
+    RESTRequest.Execute;
+    Result := RESTResponse.JSONText;
+  except
+    Result := 'Não foi possível carregar a API!';
+  end;
 end;
 
 procedure TfMissao17.edtValorKeyPress(Sender: TObject; var Key: Char);

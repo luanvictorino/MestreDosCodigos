@@ -248,8 +248,9 @@ object fMissao20: TfMissao20
         Top = 131
         Width = 121
         Height = 21
-        Date = 43868.000000000000000000
+        Date = 43875.000000000000000000
         Time = 0.631425729166949100
+        Checked = False
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

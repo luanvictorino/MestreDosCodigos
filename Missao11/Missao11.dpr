@@ -52,22 +52,7 @@ end;
 
 function TContinenteHelper.AsString: String;
 begin
-  case Self of
-    cAfrica:
-      Result := GetEnumName(TypeInfo(TContinente), Integer(cAfrica));
-    cAntartica:
-      Result := GetEnumName(TypeInfo(TContinente), Integer(cAntartica));
-    cAmerica:
-      Result := GetEnumName(TypeInfo(TContinente), Integer(cAmerica));
-    cAsia:
-      Result := GetEnumName(TypeInfo(TContinente), Integer(cAsia));
-    cEuropa:
-      Result := GetEnumName(TypeInfo(TContinente), Integer(cEuropa));
-    cOceania:
-      Result := GetEnumName(TypeInfo(TContinente), Integer(cOceania));
-    else
-      raise Exception.Create('Enum não referenciado no AsString');
-  end;
+  Result := GetEnumName(TypeInfo(TContinente), Integer(Self));
 end;
 
 function TContinenteHelper.AsByte: Byte;

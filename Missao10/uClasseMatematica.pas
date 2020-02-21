@@ -10,33 +10,12 @@ type
     FEsquerda: double;
     FDireita: double;
     FOperacaoMatematica: TOperacaoMatematica;
-    procedure SetDireita(const Value: double);
-    procedure SetEsquerda(const Value: double);
-    procedure SetOperacaoMatematica(const Value: TOperacaoMatematica);
   public
-    property Esquerda: double read FEsquerda write SetEsquerda;
-    property Direita: double read FDireita write SetDireita;
-    property OperacaoMatematica: TOperacaoMatematica read FOperacaoMatematica write SetOperacaoMatematica;
+    property Esquerda: double read FEsquerda write FEsquerda;
+    property Direita: double read FDireita write FDireita;
+    property OperacaoMatematica: TOperacaoMatematica read FOperacaoMatematica write FOperacaoMatematica;
   end;
 
 implementation
-
-{ TClasseMatematica }
-
-procedure TClasseMatematica.SetDireita(const Value: double);
-begin
-  FDireita := Value;
-end;
-
-procedure TClasseMatematica.SetEsquerda(const Value: double);
-begin
-  FEsquerda := Value;
-end;
-
-procedure TClasseMatematica.SetOperacaoMatematica(
-  const Value: TOperacaoMatematica);
-begin
-  FOperacaoMatematica := Value;
-end;
 
 end.

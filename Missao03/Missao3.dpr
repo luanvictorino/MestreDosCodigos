@@ -20,48 +20,51 @@ uses
   System.SysUtils,
   uVendedor in 'uVendedor.pas';
 
+function ValidarValor(pValor: String): Real;
+begin
+  Result := StrToFloatDef(pValor,0);
+end;
+
 procedure main;
+const
+  sFORMAT = '###,##0.00';
 var
   oVendedor: TVendedor;
-  sNome: String;
-  sSalarioFixo: String;
-  sTotalVendas: String;
+  sValor: String;
   nValorReceber: Real;
 begin
   oVendedor := TVendedor.Create;
   try
     repeat
-    Write('Informe o nome do vendedor: ');
-    Readln(sNome);
-    oVendedor.Nome := sNome;
+      Write('Informe o nome do vendedor: ');
+      Readln(sValor);
+      oVendedor.Nome := sValor;
 
-    Write('Informe o salário fixo: ');
-    Readln(sSalarioFixo);
-    oVendedor.SalarioFixo := sSalarioFixo;
+      Write('Informe o salário fixo: ');
+      Readln(sValor);
+      oVendedor.SalarioFixo := ValidarValor(sValor);
 
-    Write('Informe o total de vendas: ');
-    Readln(sTotalVendas);
-    oVendedor.TotalVendas := sTotalVendas;
+      Write('Informe o total de vendas: ');
+      Readln(sValor);
+      oVendedor.TotalVendas := ValidarValor(sValor);
 
-    Writeln(EmptyStr);
-    if oVendedor.ValidarDados then
-      Break;
+      Writeln(EmptyStr);
+      if oVendedor.ValidarDados then
+        Break;
 
-    Writeln('Dados inválidos, favor informe-os novamente!!');
-    Continue;
-    until False;
+      Writeln('Dados inválidos, favor informe-os novamente!!');
+    until oVendedor.ValidarDados;
 
     nValorReceber := oVendedor.CalcularValorReceber;
     Writeln('===================');
     Writeln('Vendedor: '+oVendedor.Nome);
-    Writeln('Salário Fixo: R$'+FormatFloat('###,##0.00',StrToFloat(oVendedor.SalarioFixo)));
-    Writeln('Valor a receber: R$'+FormatFloat('###,##0.00',nValorReceber));
+    Writeln('Salário Fixo: R$'+ FormatFloat(sFORMAT, oVendedor.SalarioFixo));
+    Writeln('Valor a receber: R$'+ FormatFloat(sFORMAT, nValorReceber));
     Writeln('===================');
+    Readln;
   finally
     oVendedor.Free;
   end;
-
-  Readln;
 end;
 
 begin

@@ -23,39 +23,44 @@ uses
   Winapi.Windows,
   System.Math;
 
-  const
+const
     sNomeBiblioteca = 'Missao6Dll.dll';
 
   type
-    TCalcularAreaTriangulo = function(nBase, nAltura: Real): Real; stdcall;
-    TCalcularAreaQuadradoRetangulo = function(nBase, nAltura: Real): Real; stdcall;
-    TCalcularAreaCirculo = function(nRaio: Real): Real; stdcall;
+    TCalcularAreaTriangulo = function(nBase, nAltura: Real): Real;
+    TCalcularAreaQuadradoRetangulo = function(nBase, nAltura: Real): Real;
+    TCalcularAreaCirculo = function(nRaio: Real): Real;
 
-procedure MostrarAreaTriangulo(pHandleDll: THandle);
+procedure PegarDadosTriangulo(var nBase: Real; var nAltura: Real);
 var
-  oCalcularAreaTriangulo: TCalcularAreaTriangulo;
-  nBase: Real;
-  nAltura: Real;
-  nArea: Real;
-  sValor: String;
+  sValor: string;
+  bValoresValidos: Boolean;
 begin
   Writeln('-----Calcular área de um triângulo-----');
   repeat
     Writeln(EmptyStr);
     Write('Informe a base: ');
     Readln(sValor);
-    nBase := StrToFloatDef(sValor, ZeroValue);
+    nBase := StrToFloatDef(sValor, 0);
 
     Write('Informe a altura: ');
     Readln(sValor);
     nAltura := StrToFloatDef(sValor, ZeroValue);
 
-    if ((nBase > ZeroValue) and (nAltura > ZeroValue)) then
-      break;
+    bValoresValidos := ((nBase > ZeroValue) and (nAltura > ZeroValue));
+    if not bValoresValidos then
+      Writeln('Informe um valor válido');
+  until bValoresValidos;
+end;
 
-    Writeln(EmptyStr);
-    Writeln('Informe um valor válido');
-  until False;
+procedure MostrarAreaTriangulo(const pHandleDll: THandle);
+var
+  oCalcularAreaTriangulo: TCalcularAreaTriangulo;
+  nBase: Real;
+  nAltura: Real;
+  nArea: Real;
+begin
+  PegarDadosTriangulo(nBase, nAltura);
 
   @oCalcularAreaTriangulo := GetProcAddress(pHandleDll, 'CalcularAreaTriangulo');
   if not Assigned(oCalcularAreaTriangulo) then
@@ -65,26 +70,31 @@ begin
   Writeln('A area do Triângulo eh: '+ FormatFloat('#0.00',nArea));
 end;
 
-procedure MostrarAreaCirculo(pHandleDll: THandle);
+procedure PegarDadosCirculo(var nRaio: Real);
 var
-  oCalcularAreaCirculo: TCalcularAreaCirculo;
-  nRaio: Real;
-  nArea: Real;
-  sValor: String;
+  sValor: string;
+  bValorValido: Boolean;
 begin
   Writeln('-----Calcular área de um círculo-----');
   repeat
     Writeln(EmptyStr);
     Write('Informe o raio do círculo: ');
     Readln(sValor);
+
     nRaio := StrToFloatDef(sValor, ZeroValue);
+    bValorValido := (nRaio > ZeroValue);
+    if not bValorValido then
+      Writeln('Informe um valor válido');
+  until bValorValido;
+end;
 
-    if (nRaio > ZeroValue) then
-      break;
-
-    Writeln(EmptyStr);
-    Writeln('Informe um valor válido');
-  until False;
+procedure MostrarAreaCirculo(const pHandleDll: THandle);
+var
+  oCalcularAreaCirculo: TCalcularAreaCirculo;
+  nRaio: Real;
+  nArea: Real;
+begin
+  PegarDadosCirculo(nRaio);
 
   @oCalcularAreaCirculo := GetProcAddress(pHandleDll, 'CalcularAreaCirculo');
   if not Assigned(oCalcularAreaCirculo) then
@@ -94,13 +104,10 @@ begin
   Writeln('A área do circulo eh: '+ FormatFloat('#0.00',nArea));
 end;
 
-procedure MostrarAreaQuadradoRetangulo(pHandleDll: THandle);
+procedure PegarDadosQuadradoRetangulo(var nBase: Real; var nAltura: Real);
 var
-  oCalcularAreaQuadradoRetangulo: TCalcularAreaQuadradoRetangulo;
-  nBase: Real;
-  nAltura: Real;
-  nArea: Real;
-  sValor: String;
+  sValor: string;
+  bValoresValidos: Boolean;
 begin
   Writeln('-----Calcular área de um quadrado/retângulo-----');
   repeat
@@ -113,12 +120,20 @@ begin
     Readln(sValor);
     nAltura := StrToFloatDef(sValor, ZeroValue);
 
-    if((nBase > ZeroValue) and (nAltura > ZeroValue)) then
-      break;
+    bValoresValidos := ((nBase > ZeroValue) and (nAltura > ZeroValue));
+    if not bValoresValidos then
+      Writeln('Informe um valor válido');
+  until bValoresValidos;
+end;
 
-    Writeln(EmptyStr);
-    Writeln('Informe um valor válido');
-  until False;
+procedure MostrarAreaQuadradoRetangulo(const pHandleDll: THandle);
+var
+  oCalcularAreaQuadradoRetangulo: TCalcularAreaQuadradoRetangulo;
+  nBase: Real;
+  nAltura: Real;
+  nArea: Real;
+begin
+  PegarDadosQuadradoRetangulo(nBase, nAltura);
 
   @oCalcularAreaQuadradoRetangulo := GetProcAddress(pHandleDll, 'CalcularAreaQuadradoRetangulo');
   if not Assigned(oCalcularAreaQuadradoRetangulo) then
@@ -132,6 +147,7 @@ procedure main;
 var
   sOperacao: String;
   hDll: THandle;
+  bOperacaoValida: Boolean;
 begin
   repeat
     Writeln('Área de um triângulo          [1]');
@@ -142,12 +158,12 @@ begin
     Readln(sOperacao);
     Writeln;
 
-    if MatchStr(sOperacao,['1','2','3'])  then
-      Break;
+    bOperacaoValida := MatchStr(sOperacao,['1','2','3']);
+    if not bOperacaoValida then
+      Writeln('Digito inválido! Tente novamente.');
 
-    Writeln('Digito inválido!! Tente novamente.');
     Writeln(EmptyStr);
-  until False;
+  until bOperacaoValida;
 
   hDll := LoadLibrary(sNomeBiblioteca);
   try
@@ -159,10 +175,10 @@ begin
       2: MostrarAreaCirculo(hDll);
       3: MostrarAreaQuadradoRetangulo(hDll);
     end;
+    Readln;
   finally
     FreeLibrary(hDll);
   end;
-  Readln;
 end;
 
 begin

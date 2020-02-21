@@ -63,6 +63,12 @@
         <Projects Include="Missao20\Missao20.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Missao06\Missao6Dll.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Missao07\Missao7Dll.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -251,14 +257,32 @@
     <Target Name="Missao20:Make">
         <MSBuild Projects="Missao20\Missao20.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Missao6Dll">
+        <MSBuild Projects="Missao06\Missao6Dll.dproj"/>
+    </Target>
+    <Target Name="Missao6Dll:Clean">
+        <MSBuild Projects="Missao06\Missao6Dll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao6Dll:Make">
+        <MSBuild Projects="Missao06\Missao6Dll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Missao7Dll">
+        <MSBuild Projects="Missao07\Missao7Dll.dproj"/>
+    </Target>
+    <Target Name="Missao7Dll:Clean">
+        <MSBuild Projects="Missao07\Missao7Dll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Missao7Dll:Make">
+        <MSBuild Projects="Missao07\Missao7Dll.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Missao1;Missao2;Missao3;Missao4;Missao5;Missao6;Missao7;Missao8;Missao9;Missao10;Missao11;Missao12;Missao13;Missao14;Missao15;Missao16;Missao17;Missao18;Missao19;Missao20"/>
+        <CallTarget Targets="Missao1;Missao2;Missao3;Missao4;Missao5;Missao6;Missao7;Missao8;Missao9;Missao10;Missao11;Missao12;Missao13;Missao14;Missao15;Missao16;Missao17;Missao18;Missao19;Missao20;Missao6Dll;Missao7Dll"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Missao1:Clean;Missao2:Clean;Missao3:Clean;Missao4:Clean;Missao5:Clean;Missao6:Clean;Missao7:Clean;Missao8:Clean;Missao9:Clean;Missao10:Clean;Missao11:Clean;Missao12:Clean;Missao13:Clean;Missao14:Clean;Missao15:Clean;Missao16:Clean;Missao17:Clean;Missao18:Clean;Missao19:Clean;Missao20:Clean"/>
+        <CallTarget Targets="Missao1:Clean;Missao2:Clean;Missao3:Clean;Missao4:Clean;Missao5:Clean;Missao6:Clean;Missao7:Clean;Missao8:Clean;Missao9:Clean;Missao10:Clean;Missao11:Clean;Missao12:Clean;Missao13:Clean;Missao14:Clean;Missao15:Clean;Missao16:Clean;Missao17:Clean;Missao18:Clean;Missao19:Clean;Missao20:Clean;Missao6Dll:Clean;Missao7Dll:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Missao1:Make;Missao2:Make;Missao3:Make;Missao4:Make;Missao5:Make;Missao6:Make;Missao7:Make;Missao8:Make;Missao9:Make;Missao10:Make;Missao11:Make;Missao12:Make;Missao13:Make;Missao14:Make;Missao15:Make;Missao16:Make;Missao17:Make;Missao18:Make;Missao19:Make;Missao20:Make"/>
+        <CallTarget Targets="Missao1:Make;Missao2:Make;Missao3:Make;Missao4:Make;Missao5:Make;Missao6:Make;Missao7:Make;Missao8:Make;Missao9:Make;Missao10:Make;Missao11:Make;Missao12:Make;Missao13:Make;Missao14:Make;Missao15:Make;Missao16:Make;Missao17:Make;Missao18:Make;Missao19:Make;Missao20:Make;Missao6Dll:Make;Missao7Dll:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

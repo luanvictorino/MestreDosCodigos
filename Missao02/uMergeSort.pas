@@ -4,7 +4,7 @@ interface
 
   type
     TMergeSort = class
-      function ConverterListaEmInteiro(sListaNumeros: String): TArray<Integer>;
+      function ConverterListaEmInteiro(const sListaNumeros: String): TArray<Integer>;
       function MergeSort(const pLista: TArray<Integer>): TArray<Integer>;
     end;
 
@@ -15,7 +15,7 @@ uses
   System.StrUtils,
   System.Math;
 
-function TMergeSort.ConverterListaEmInteiro(sListaNumeros: String): TArray<Integer>;
+function TMergeSort.ConverterListaEmInteiro(const sListaNumeros: String): TArray<Integer>;
 var
   aListaNumerosStr: TArray<String>;
   i: Integer;
@@ -25,7 +25,6 @@ begin
   SetLength(result, Length(aListaNumerosStr));
   for i := Low(aListaNumerosStr) to High(aListaNumerosStr) do
     result[i] := aListaNumerosStr[i].ToInteger;
-
 end;
 
 function TMergeSort.MergeSort(const pLista: TArray<Integer>): TArray<Integer>;
@@ -47,7 +46,7 @@ begin
   SetLength(aListaEsquerda,nMeio);
   SetLength(aListaDireita,(Length(pLista)-nMeio));
 
-  for nIndice := ZeroValue to Pred(nMeio) do
+  for nIndice := 0 to Pred(nMeio) do
     aListaEsquerda[nIndice] := pLista[nIndice];
 
   for nIndice := nMeio  to Pred(Length(pLista)) do
@@ -88,7 +87,6 @@ begin
     Inc(nDireita);
     Inc(nIndice);
   end;
-
   Result := aListaOrdenada;
 end;
 

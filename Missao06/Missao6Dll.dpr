@@ -2,25 +2,24 @@ library Missao6Dll;
 
 uses
   System.SysUtils,
-  System.Classes;
+  System.Classes,
+  System.Math;
 
 {$R *.res}
 
-function CalcularAreaTriangulo(nBase, nAltura: Real): Real; stdcall;
+function CalcularAreaTriangulo(const nBase, nAltura: Real): Real; stdcall;
 begin
   Result := (nBase*nAltura)/2;
 end;
 
-function CalcularAreaQuadradoRetangulo(nBase, nAltura: Real):Real; stdcall;
+function CalcularAreaQuadradoRetangulo(const nBase, nAltura: Real):Real; stdcall;
 begin
   Result := nBase*nAltura;
 end;
 
-function CalcularAreaCirculo(nRaio: Real): Real; stdcall;
-const
-  nPI = 3.1415926535898;
+function CalcularAreaCirculo(const nRaio: Real): Real; stdcall;
 begin
-  Result := (nRaio*nRaio)*nPI;
+  Result := (nRaio*nRaio)*Pi;
 end;
 
 exports

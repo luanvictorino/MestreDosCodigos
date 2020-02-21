@@ -14,7 +14,7 @@ program Missao1;
 uses
   System.SysUtils, Winapi.Windows;
 
-function Fatorial(nValor: Int64): Int64;
+function Fatorial(const nValor: Int64): Int64;
 begin
   if nValor in [0, 1] then
     Result := 1
@@ -22,7 +22,7 @@ begin
     Result := nValor * Fatorial(Pred(nValor));
 end;
 
-function ValidarValor(sValor: String): Boolean;
+function ValidarValor(const sValor: String): Boolean;
 var
   nValor: Int64;
 begin
@@ -38,13 +38,16 @@ procedure main;
 var
   nValor: Int64;
   sValor: String;
+  bSairDoPrograma: Boolean;
 begin
+  Writeln('Informe um número de 0 a 20 e tecle ''Enter'' para descobrir seu '
+           + 'fatorial ou digite ''Sair'' para sair do programa: ');
   repeat
-    Write('Informe um número de 0 a 20 para descobrir seu fatorial ou'
-           + ' digite ''sair'' para sair do programa: ');
-    readln(sValor);
+    Write('Informe um número: ');
+    Readln(sValor);
 
-    if sValor.ToLower = 'sair' then
+    bSairDoPrograma := sValor.ToLower = 'sair';
+    if bSairDoPrograma then
       Break;
 
     if not ValidarValor(sValor) then
@@ -57,9 +60,7 @@ begin
     nValor := StrToInt64(sValor);
     Writeln('O fatorial de ' + nValor.ToString +' é: ' + Fatorial(nValor).ToString);
     Writeln(EmptyStr);
-    Continue;
-  until False;
-  Readln;
+  until bSairDoPrograma;
 end;
 
 begin

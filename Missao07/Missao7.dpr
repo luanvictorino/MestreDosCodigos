@@ -23,23 +23,19 @@ function NumeroPorExtenso(sNumero: String): String;
 
 function FormatarNumero(sNumero: String): String;
 var
-  nNumero: Real;
   sDecimais: String;
-  nTamanhoNumero: Integer;
 begin
   sNumero := StringReplace(sNumero, '.', ',', [rfReplaceAll]);
-  sDecimais := copy(sNumero, pos(',', sNumero)+ 1, Length(sNumero));
-  nNumero := StrToFloat(sNumero);
-  sNumero := FormatFloat('0.00', nNumero);
+  sDecimais := copy(sNumero, Succ(pos(',', sNumero)), 2);
 
-  nTamanhoNumero := Length(sNumero);
+  sNumero := FormatFloat('0.00', StrToFloat(sNumero));
   if Length(sDecimais) = 1 then
-    sNumero := copy(sNumero, 1, Pred(nTamanhoNumero));
+    sNumero := copy(sNumero, 1, Pred(Length(sNumero)));
 
   Result := sNumero;
 end;
 
-function NumeroValido(sNumero: String): Boolean;
+function ValidarNumero(sNumero: String): Boolean;
 var
   nNumero: Extended;
 begin
@@ -47,10 +43,7 @@ begin
 
   sNumero := StringReplace(sNumero, '.', ',', [rfReplaceAll]);
   if not TryStrToFloat(sNumero, nNumero) then
-  begin
-    Result := False;
     Exit;
-  end;
 
   sNumero := FormatarNumero(sNumero);
   if Length(sNumero) > 15 then
@@ -63,16 +56,17 @@ procedure main;
 var
   sNumero: String;
   sNumeroPorExtenso: String;
+  bSairDoPrograma: Boolean;
 begin
-  sNumero := EmptyStr;
   repeat
-    Write('Digite um número ou digite ''sair'' para sair: ');
+    Write('Informe um número ou digite ''sair'' para sair: ');
     Readln(sNumero);
 
-    if sNumero.ToLower = 'sair' then
+    bSairDoPrograma := sNumero.ToLower = 'sair';
+    if bSairDoPrograma then
       Break;
 
-    if not NumeroValido(sNumero) then
+    if not ValidarNumero(sNumero) then
     begin
       Writeln('Número inválido ou maior que 1 trilhão!');
       Writeln(EmptyStr);
@@ -83,7 +77,7 @@ begin
     sNumeroPorExtenso := NumeroPorExtenso(sNumero);
     Writeln('Número por extenso: '+sNumeroPorExtenso);
     Writeln;
-  until False;
+  until bSairDoPrograma;
 end;
 
 begin

@@ -23,7 +23,7 @@ type
     mmMetodos: TMemo;
     lbClasse: TLabel;
     lbNomeClasse: TLabel;
-    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,11 +37,11 @@ implementation
 
 {$R *.dfm}
 
-uses uLeitorClasse;
+uses uLeitorClasse, DataSnap.DBClient;
 
 { TLeitorRTTI }
 
-procedure TfMissao16.FormShow(Sender: TObject);
+procedure TfMissao16.FormCreate(Sender: TObject);
 var
   oLeitorClasse: TLeitorClasse;
 begin

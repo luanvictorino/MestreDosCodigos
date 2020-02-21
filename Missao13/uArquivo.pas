@@ -9,13 +9,10 @@ uses
   type
     TArquivo = class(TInterfacedObject, ILerArquivo, ISalvarArquivo)
     private
-      FLista: TStringList;
-    protected
       function CaminhoArquivo: String;
     public
       procedure LerDoArquivo;
       procedure SalvarParaArquivo;
-      property Lista: TStringList read FLista;
   end;
 
 implementation
@@ -52,10 +49,7 @@ var
 begin
   AssignFile(sArquivo, CaminhoArquivo + 'Missao13.txt');
   Rewrite(sArquivo);
-  Writeln(sArquivo, 'Primeira linha');
-  Writeln(sArquivo, 'Segunda linha');
-  Writeln(sArquivo, 'Terceira linha');
-  Writeln(sArquivo, 'Quarta linha');
+  Writeln(sArquivo, 'Teste de leitura e escrita em um arquivo de texto!');
   CloseFile(sArquivo);
 end;
 

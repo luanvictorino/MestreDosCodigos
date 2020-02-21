@@ -23,23 +23,29 @@ var
   aListaNumeros: TArray<Integer>;
   oMergeSort: TMergeSort;
   nNumero: Integer;
+  sListaOrdenada: String;
 begin
   oMergeSort := TMergeSort.Create;
+  Writeln('Informe uma lista de números separados por vírgula em seguida ' +
+          'tecle''Enter'' para aplicar o algoritmo merge-sort. ');
   try
-    Write('Digite uma lista de números separados por vírgula: ');
-    readln(sListaNumeros);
+    Write('Lista de números: ');
+    Readln(sListaNumeros);
 
     aListaNumeros := oMergeSort.ConverterListaEmInteiro(sListaNumeros);
     aListaNumeros := oMergeSort.MergeSort(aListaNumeros);
 
-    Write('A lista ordenada é');
+    Write('A lista ordenada é: ');
+
     for nNumero in aListaNumeros do
-      Write(', '+nNumero.ToString);
+      sListaOrdenada := (sListaOrdenada + ', ' + nNumero.ToString);
+
+    Delete(sListaOrdenada, 1, 1);
+    Write(sListaOrdenada);
+    Readln;
   finally
     oMergeSort.Free;
   end;
-
-  Readln;
 end;
 
 begin

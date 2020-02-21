@@ -17,30 +17,28 @@ uses
   System.StrUtils,
   System.Math;
 
-function RemoverAcentos(sFrase: String): String;
+function InverterFrase(const sFrase: String): String;
+begin
+  Result := ReverseString(sFrase);
+end;
+
+function RemoverAcentos(const sFrase: String): String;
 type
   USAscii20127 = type AnsiString(20127);
 begin
   Result := string(USAscii20127(sFrase));
 end;
 
-function InverterFrase(sFrase: String): String;
-var
-  nPosicao: Integer;
-begin
-  for nPosicao := Length(sFrase) downto 1 do
-    Result := Result + sFrase[nPosicao];
-end;
-
-function ValidarPalindromo(sFrase: String): boolean;
+function ValidarPalindromo(const pFrase: String): boolean;
 var
   sFraseInvertida: String;
   sFraseFormatada: String;
+  sFrase: String;
   nPosicao: Integer;
 begin
   Result := False;
 
-  sFrase := RemoverAcentos(sFrase).ToLower;
+  sFrase := RemoverAcentos(pFrase).ToLower;
   for nPosicao := 1 to Length(sFrase) do
   begin
     if MatchStr(sFrase[nPosicao],[',','.','!', '"','?',':', '-', '(', ')', ';', ' ']) then
@@ -54,16 +52,19 @@ begin
     Result := True;
 end;
 
-function PegarFrasesPalindromos(var aListaFrases: TArray<String>): TArray<String>;
+function PegarFrasesPalindromos(const aListaFrases: TArray<String>): TArray<String>;
 var
   nPosicaoFrase: Integer;
+  nPosicaoFrasePalindromo: Integer;
 begin
-  for nPosicaoFrase := ZeroValue to Pred(Length(aListaFrases)) do
+  nPosicaoFrasePalindromo := 0;
+  for nPosicaoFrase := 0 to Pred(Length(aListaFrases)) do
   begin
     if ValidarPalindromo(aListaFrases[nPosicaoFrase]) then
     begin
-      SetLength(result, Succ(Length(result)));
-      Result[Pred(Length(result))] := aListaFrases[nPosicaoFrase];
+      Inc(nPosicaoFrasePalindromo);
+      SetLength(result, nPosicaoFrasePalindromo);
+      Result[Pred(nPosicaoFrasePalindromo)] := aListaFrases[nPosicaoFrase];
     end;
   end;
 end;
@@ -73,20 +74,24 @@ var
   sFrase: String;
   aListaFrases: TArray<String>;
   aListaFrasesPalindromo: TArray<String>;
+  bSairDoPrograma: Boolean;
 begin
+  Writeln('Informe uma frase e tecle ''Enter'' para continuar ou digite ''Sair'' para ' +
+            'descobrir se há alguma frase Palíndromo.');
   repeat
-    Write('Digite uma lista de frases ou digite ''sair'' para sair: ');
-    readln(sFrase);
+    Write('Informe uma frase: ');
+    Readln(sFrase);
 
-    if sFrase.ToLower = 'sair' then
-      Break;
-
-    SetLength(aListaFrases, Succ(Length(aListaFrases)));
-    aListaFrases[Pred(Length(aListaFrases))] := sFrase;
-  until False;
+    bSairDoPrograma := sFrase.ToLower = 'sair';
+    if not bSairDoPrograma then
+    begin
+      SetLength(aListaFrases, Succ(Length(aListaFrases)));
+      aListaFrases[Pred(Length(aListaFrases))] := sFrase;
+    end;
+  until bSairDoPrograma;
 
   aListaFrasesPalindromo := PegarFrasesPalindromos(aListaFrases);
-  Writeln('======== Palindromos ========');
+  Writeln('======== Palíndromos ========');
   for sFrase in aListaFrasesPalindromo do
     Writeln(sFrase);
   Writeln('=============================');

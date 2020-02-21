@@ -23,16 +23,11 @@ implementation
 
 constructor TCacheObjetos.Create;
 begin
-  FLista := TObjectDictionary<string, TObject>.Create;
+  FLista := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
 end;
 
 destructor TCacheObjetos.Destroy;
-var
-  oItem: TObject;
 begin
-  for oItem in FLista.Values do
-    oItem.Free;
-
   FLista.Free;
   inherited;
 end;

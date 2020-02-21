@@ -200,9 +200,19 @@ begin
   else
   begin
     if bDecimal then
-      sDecimais := ' e ' +  NumeroExtensoCentena(sDecimais, 2) + ' décimos'
+    begin
+      if sDecimais = '01' then
+        sDecimais := ' e ' +  NumeroExtensoCentena(sDecimais, 2) + ' décimo'
+      else
+        sDecimais := ' e ' +  NumeroExtensoCentena(sDecimais, 2) + ' décimos'
+    end
     else
-      sDecimais := ' e ' +  NumeroExtensoCentena(sDecimais, 2) + ' centésimos';
+    begin
+      if sDecimais = '01' then
+        sDecimais := ' e ' +  NumeroExtensoCentena(sDecimais, 2) + ' centésimo'
+      else
+        sDecimais := ' e ' +  NumeroExtensoCentena(sDecimais, 2) + ' centésimos'
+    end;
   end;
   Result := sDecimais;
 end;

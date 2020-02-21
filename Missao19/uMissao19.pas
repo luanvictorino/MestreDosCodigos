@@ -48,6 +48,8 @@ begin
 
     Builder := TStringBuilder.Create(mmXml.Text);
     try
+      mmXml.Text :=
+
       Builder.AppendLine('ID: ' + oXMLItemType.Id.ToString)
              .AppendLine('Nome: ' + oXMLItemType.First_name)
              .AppendLine('Sobrenome: ' + oXMLItemType.Last_name)
@@ -62,10 +64,9 @@ begin
              .AppendLine('|_ Recurso: ' + oXMLItemType._links.Self.Href)
              .AppendLine('|_ Editar: ' + oXMLItemType._links.Edit.Href)
              .AppendLine('|_ Avatar: ' + oXMLItemType._links.Avatar.Href)
-             .AppendLine('------------------------------------------------------------');
-
-        mmXml.Text := Builder.toString;
-      finally
+             .AppendLine('------------------------------------------------------------')
+             .ToString;
+    finally
       Builder.Free;
     end;
   end;

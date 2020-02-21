@@ -3,19 +3,19 @@ unit uImpressora;
 interface
 
 type
-  IScanner = interface
+  IScanner = interface(IInterface)
     ['{1380AA4B-CF42-4212-8B98-9F21DFE19E2F}']
   end;
 
-  IFax = interface
+  IFax = interface(IInterface)
     ['{7CA9FE92-B19C-41BC-A883-4BE46C47384D}']
   end;
 
-  ICopiadora = interface
+  ICopiadora = interface(IInterface)
     ['{98F17AD1-62AC-42CD-820C-7FC7671803FC}']
   end;
 
-  IPrinter = interface
+  IPrinter = interface(IInterface)
     ['{9D2FDE28-4DD6-43CB-84E0-5515503A0A60}']
   end;
 
